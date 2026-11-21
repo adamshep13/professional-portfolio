@@ -1,0 +1,529 @@
+/* ==========================================
+   ADAM SHEPARD | PROFESSIONAL PORTFOLIO
+   Technology / Cybersecurity Design
+   ========================================== */
+
+/* COLOR SYSTEM */
+:root {
+  --background: #080d17;
+  --background-light: #101b2d;
+  --card: #111e30;
+  --blue: #147dff;
+  --green: #39ff88;
+  --white: #f3f7ff;
+  --muted: #b5c7dd;
+  --border: rgba(57, 255, 136, 0.18);
+}
+
+/* GLOBAL STYLES */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 105px;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: var(--background);
+  color: var(--white);
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* CIRCUIT GRID BACKGROUND */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(20, 125, 255, 0.055) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(20, 125, 255, 0.055) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+}
+
+/* NAVIGATION */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(8, 13, 23, 0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+}
+
+nav {
+  max-width: 1250px;
+  margin: auto;
+  padding: 17px 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.logo {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--green);
+  text-decoration: none;
+  white-space: nowrap;
+  text-shadow: 0 0 16px rgba(57,255,136,.3);
+}
+
+.logo::before {
+  content: "< ";
+  color: var(--blue);
+}
+
+.logo::after {
+  content: " />";
+  color: var(--blue);
+}
+
+nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px 18px;
+  list-style: none;
+}
+
+nav ul a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: color 0.25s;
+}
+
+nav ul a:hover,
+nav ul a:focus-visible {
+  color: var(--green);
+}
+
+/* GENERAL SECTIONS */
+main {
+  width: 100%;
+}
+
+section {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 95px 6%;
+  position: relative;
+}
+
+section h2 {
+  color: var(--white);
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  margin-bottom: 28px;
+  line-height: 1.25;
+}
+
+section h2::before {
+  content: "// ";
+  color: var(--green);
+  font-family: Consolas, monospace;
+}
+
+section p {
+  color: var(--muted);
+  max-width: 850px;
+  margin-bottom: 22px;
+  font-size: 1.04rem;
+}
+
+section h3 {
+  color: var(--blue);
+  font-size: 1.3rem;
+  margin-bottom: 14px;
+}
+
+/* HERO / HOME SECTION */
+#home {
+  max-width: none;
+  min-height: 82vh;
+  padding: 130px max(6%, calc((100% - 1050px)/2));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  background:
+    radial-gradient(
+      circle at 82% 25%,
+      rgba(20,125,255,.20),
+      transparent 42%
+    ),
+    radial-gradient(
+      circle at 15% 75%,
+      rgba(57,255,136,.08),
+      transparent 40%
+    ),
+    linear-gradient(135deg, #080d17, #0c1929);
+}
+
+#home::before {
+  content: "SYSTEM ONLINE  •  PORTFOLIO INITIALIZED";
+  display: block;
+  font-family: Consolas, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  color: var(--green);
+  margin-bottom: 25px;
+}
+
+#home h1 {
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 22px;
+  background: linear-gradient(
+    100deg,
+    #ffffff 20%,
+    #54a5ff 65%,
+    #39ff88 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+#home h2 {
+  font-family: Consolas, monospace;
+  font-size: clamp(1rem, 2.5vw, 1.35rem);
+  color: var(--green);
+  font-weight: 500;
+  max-width: 850px;
+  margin-bottom: 30px;
+}
+
+#home h2::before {
+  content: "> ";
+}
+
+#home p {
+  font-size: 1.18rem;
+  max-width: 720px;
+  margin-bottom: 35px;
+}
+
+#home a {
+  display: inline-block;
+  padding: 15px 28px;
+  background: var(--blue);
+  border: 1px solid #59a4ff;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 0 25px rgba(20,125,255,.25);
+  transition: transform .25s, box-shadow .25s;
+}
+
+#home a:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 35px rgba(20,125,255,.55);
+}
+
+/* ABOUT ME */
+#about {
+  border-top: 1px solid var(--border);
+}
+
+#about p {
+  border-left: 3px solid var(--blue);
+  padding-left: 20px;
+}
+
+/* PORTFOLIO PROJECT CARDS */
+#portfolio {
+  max-width: 1250px;
+}
+
+.project-card {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: calc(33.333% - 23px);
+  min-height: 320px;
+  margin: 0 30px 25px 0;
+  padding: 32px 26px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(20,36,58,.97),
+    rgba(9,18,31,.97)
+  );
+
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+
+  transition:
+    transform .3s,
+    border-color .3s,
+    box-shadow .3s;
+}
+
+.project-card:last-child {
+  margin-right: 0;
+}
+
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--blue),
+    var(--green)
+  );
+}
+
+.project-card::after {
+  content: "01 / TECH PROJECT";
+  display: block;
+  margin-top: 28px;
+  font-family: Consolas, monospace;
+  color: var(--green);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+}
+
+.project-card:nth-of-type(2)::after {
+  content: "02 / DATABASE SYSTEMS";
+}
+
+.project-card:nth-of-type(3)::after {
+  content: "03 / SOFTWARE DEVELOPMENT";
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--green);
+  box-shadow: 0 12px 40px rgba(57,255,136,.12);
+}
+
+.project-card h3 {
+  color: var(--white);
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.project-card p {
+  font-size: .96rem;
+}
+
+/* TECHNICAL SKILLS */
+#skills ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+#skills li {
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--white);
+  font-family: Consolas, monospace;
+  font-size: .95rem;
+  transition: border-color .25s;
+}
+
+#skills li::before {
+  content: "▸ ";
+  color: var(--green);
+}
+
+#skills li:hover {
+  border-color: var(--blue);
+}
+
+/* EDUCATION AND EXPERIENCE */
+#education,
+#experience,
+#development {
+  border-top: 1px solid var(--border);
+}
+
+#education h3,
+#experience h3 {
+  margin-top: 30px;
+  padding-left: 18px;
+  border-left: 3px solid var(--green);
+}
+
+#education p,
+#experience p {
+  padding-left: 21px;
+}
+
+/* CONTACT */
+#contact {
+  text-align: center;
+  border-top: 1px solid var(--border);
+}
+
+#contact p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 35px 20px;
+  background: #050910;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-family: Consolas, monospace;
+  font-size: .85rem;
+}
+
+/* ACCESSIBILITY */
+a:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 5px;
+}
+
+/* ANIMATIONS */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#home h1,
+#home h2,
+#home p,
+#home a {
+  animation: fadeUp .8s ease both;
+}
+
+#home h2 {
+  animation-delay: .15s;
+}
+
+#home p {
+  animation-delay: .3s;
+}
+
+#home a {
+  animation-delay: .45s;
+}
+
+/* TABLET */
+@media (max-width: 950px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    justify-content: flex-start;
+  }
+
+  .project-card {
+    width: calc(50% - 18px);
+    margin-right: 25px;
+  }
+
+  .project-card:nth-of-type(2) {
+    margin-right: 0;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+  html {
+    scroll-padding-top: 165px;
+  }
+
+  nav {
+    padding: 14px 5%;
+  }
+
+  nav ul {
+    gap: 8px 13px;
+  }
+
+  nav ul a {
+    font-size: .75rem;
+  }
+
+  section {
+    padding: 65px 6%;
+  }
+
+  #home {
+    min-height: 70vh;
+    padding: 85px 6%;
+  }
+
+  #home h1 {
+    letter-spacing: -1px;
+  }
+
+  #home::before {
+    font-size: .65rem;
+    letter-spacing: 1px;
+  }
+
+  .project-card {
+    width: 100%;
+    min-height: auto;
+    margin: 0 0 22px 0;
+  }
+
+  #skills ul {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* REDUCED MOTION */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  #home h1,
+  #home h2,
+  #home p,
+  #home a {
+    animation: none;
+  }
+
+  .project-card,
+  #home a {
+    transition: none;
+  }
+}
