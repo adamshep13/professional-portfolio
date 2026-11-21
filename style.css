@@ -4,3 +4,30 @@
 @media(max-width:900px){.nav-toggle{display:block;margin-left:auto}.topbar nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:#071422;padding:20px 6%;border-bottom:1px solid var(--border)}.topbar nav.open{display:flex}.hero{grid-template-columns:1fr;gap:55px}.hero-art{max-width:700px;width:100%;margin:auto}.about-grid,.edu-grid,.project{grid-template-columns:1fr}.project-screen{border-right:0;border-bottom:1px solid var(--border)}.contact-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.section{padding:75px 6%}.hero{padding-top:65px;padding-bottom:110px}.hero h1{font-size:clamp(2.65rem,10vw,3.8rem);letter-spacing:-1.5px}.hero-art{height:390px}.chip{width:155px;height:155px}.chip-face b{font-size:2.7rem}.chip-face small{font-size:.4rem}.ring-one{width:230px;height:230px}.ring-two{width:300px;height:300px}.floating-code{width:78%;bottom:-12px;right:-5px}.floating-code pre{font-size:.52rem;padding:12px}.hud-top,.hud-bottom{font-size:.48rem}.scroll-hint{bottom:35px}.skills-grid,.roadmap{grid-template-columns:1fr}.about-grid>.panel,.edu,.project-info{padding:23px}.section-title h2{letter-spacing:-1px}.dispatch-layout{grid-template-columns:1fr 1fr}.dispatch-list{font-size:.5rem}.screen-top{font-size:.52rem}.screen-top span{display:none}.career{padding:22px}.terminal-wide pre{font-size:.58rem}.brand{font-size:.8rem}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+
+/* VISUAL UPGRADE — section-specific circuitry and dynamic depth */
+.section{position:relative;isolation:isolate;overflow:hidden}
+.section-art{position:absolute;z-index:-1;pointer-events:none;inset:0;background-repeat:no-repeat;background-size:min(850px,88vw) auto;opacity:.37;filter:drop-shadow(0 0 25px rgba(47,190,255,.22));animation:art-drift 18s ease-in-out infinite alternate}
+.section-art-circuit{background-image:url('circuit.svg');background-position:calc(100% + 170px) 10%}
+.section-art-processor{background-image:url('processor.svg');background-position:-200px 65%;animation-delay:-7s}
+#portfolio .section-art{opacity:.25;background-position:calc(100% + 300px) 35%}
+#skills .section-art{opacity:.42;background-position:calc(100% + 170px) 25%}
+#education .section-art{opacity:.32;background-position:-300px 10%}
+#experience .section-art{opacity:.36;background-position:calc(100% + 200px) 50%}
+#development .section-art{opacity:.35;background-position:-280px 55%}
+#contact .section-art{opacity:.42;background-position:calc(100% + 250px) 40%}
+@keyframes art-drift{from{transform:translate3d(-15px,10px,0) rotate(-1deg)}to{transform:translate3d(25px,-22px,0) rotate(1deg)}}
+.panel{position:relative;backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px);transform-style:preserve-3d;transition:transform .45s cubic-bezier(.2,.7,.2,1),box-shadow .45s,border-color .45s}
+.panel:hover{box-shadow:0 28px 65px rgba(0,0,0,.35),0 0 30px rgba(50,215,255,.15);border-color:rgba(83,223,255,.6)}
+.project:nth-child(odd) .project-screen{transform:perspective(1100px) rotateY(-3deg) rotateX(2deg) scale(.97);transition:transform .6s ease,filter .6s ease;filter:drop-shadow(0 16px 18px rgba(0,0,0,.25))}
+.project:nth-child(even) .project-screen{transform:perspective(1100px) rotateY(3deg) rotateX(-2deg) scale(.97);transition:transform .6s ease,filter .6s ease;filter:drop-shadow(0 16px 18px rgba(0,0,0,.25))}
+.project:hover .project-screen{transform:perspective(1100px) rotateY(0) rotateX(0) scale(1.01);filter:drop-shadow(0 0 25px rgba(57,255,158,.17))}
+.project-screen:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(112deg,transparent 28%,rgba(83,223,255,.08) 47%,transparent 58%);background-size:240% 100%;animation:screen-sweep 8s ease-in-out infinite}
+@keyframes screen-sweep{0%,20%{background-position:150% 0}65%,100%{background-position:-150% 0}}
+.skill:nth-child(2n){transform:translateY(13px)}.skill:nth-child(3n){border-color:rgba(57,255,158,.28)}
+.career:nth-child(2n){border-color:rgba(83,223,255,.33)}
+.contact-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.contact-link{overflow-wrap:anywhere}
+.contact-link:hover .contact-icon{animation:icon-glow 1.8s ease-in-out infinite}
+@media(max-width:900px){.contact-grid{grid-template-columns:1fr}.section-art{background-size:650px auto;opacity:.2}.skill:nth-child(2n){transform:none}}
+@media(prefers-reduced-motion:reduce){.section-art,.project-screen:after{animation:none!important}.project:nth-child(n) .project-screen{transform:none}}
