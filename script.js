@@ -25,3 +25,14 @@ if (!reduced) {
   }, { passive: true });
   updateArt();
 }
+
+
+// Highlight the section currently in view without changing navigation destinations.
+const sectionLinks = [...document.querySelectorAll('#nav a[href^="#"]')];
+const sectionObserver = new IntersectionObserver(entries => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) continue;
+    sectionLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id));
+  }
+}, {rootMargin:'-22% 0px -55% 0px'});
+document.querySelectorAll('main section[id]').forEach(s => sectionObserver.observe(s));
