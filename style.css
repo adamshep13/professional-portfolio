@@ -22,3 +22,58 @@
 @keyframes orbitSpin{to{transform:rotate(360deg)}}@keyframes panelShimmer{0%,30%{background-position:180% 0}65%,100%{background-position:-80% 0}}@keyframes imageSweep{0%,20%{transform:translateX(-90%)}65%,100%{transform:translateX(90%)}}
 @media(max-width:800px){.ambient-orbit{width:75vw;height:75vw;opacity:.27;right:-25vw}.parachute-svg{width:42px;height:56px}}
 @media(prefers-reduced-motion:reduce){.ambient-orbit,.project-image:before,.project:after,.skill:after,.career:after,.education-card:after,.roadmap-card:after,.contact-card:after{animation:none!important}}
+
+
+/* Interactive V3: distinct, independent motion scenes. Decorative and never intercept clicks. */
+.motion-scene{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;color:#54eaff;opacity:.83}
+.motion-scene>*{position:absolute}
+.motion-label{right:5%;top:19%;font:700 11px Consolas,monospace;letter-spacing:2px;color:#a5ff52;text-shadow:0 0 15px #8fff60}
+.motion-radar{right:6%;top:26%;width:180px;aspect-ratio:1;border:1px solid #58f5ff99;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0 29px,#46e9ff45 30px 31px),conic-gradient(from 0deg,#7cff552e,transparent 45deg);animation:radarTurn 9s linear infinite}
+.motion-ping{right:12%;top:37%;width:12px;height:12px;background:#b2ff4c;border-radius:50%;box-shadow:0 0 0 8px #8dff4b22,0 0 30px #8dff4b;animation:beacon 3s ease-in-out infinite}
+.motion-route{left:4%;right:4%;bottom:6%;height:46px;border-bottom:2px dashed #4ffaff88}
+.motion-truck,.motion-vehicle{position:absolute;bottom:2px;left:0;color:#80fff0;font-size:42px;line-height:1;text-shadow:0 0 18px #36eaff;animation:routeDrive 15s linear infinite}
+.motion-truck i,.motion-vehicle i{font-size:13px;display:block;position:absolute;bottom:-3px;left:7px;white-space:nowrap;color:#b3ff56;font-style:normal;letter-spacing:11px}
+.motion-stop{position:absolute;bottom:-5px;width:11px;height:11px;border:2px solid #afff5d;border-radius:50%;box-shadow:0 0 14px #b2ff56}
+.stop-a{left:24%}.stop-b{left:52%}.stop-c{left:80%}
+.motion-db{right:7%;top:17%;width:115px;height:150px;animation:dbFloat 7s ease-in-out infinite}
+.motion-db span{position:absolute;left:0;right:0;height:45px;border:2px solid #5ff7f6;border-radius:50%;background:linear-gradient(180deg,#31c7e84a,#021927a8);box-shadow:0 0 18px #29e7fa5c}
+.motion-db span:nth-child(1){top:0}.motion-db span:nth-child(2){top:42px}.motion-db span:nth-child(3){top:84px}
+.motion-score{right:22%;top:15%;width:155px;height:90px;padding:8px;border:1px solid #39dff977;border-radius:6px;background:#031727a8;transform:perspective(400px) rotateY(-12deg)}
+.motion-score b{display:block;font:700 9px Consolas,monospace;color:#a9ff57}
+.motion-score i{display:inline-block;vertical-align:bottom;width:13%;margin:18px 3% 0;background:linear-gradient(#54f8e5,#3fa9ff);height:25px;animation:scoreBars 3s ease-in-out infinite alternate}
+.motion-score i:nth-child(3){animation-delay:-.6s}.motion-score i:nth-child(4){animation-delay:-1.2s}.motion-score i:nth-child(5){animation-delay:-1.8s}.motion-score i:nth-child(6){animation-delay:-2.4s}
+.motion-code{right:6%;top:19%;font:700 13px Consolas,monospace;color:#a4ff5c;text-shadow:0 0 12px #4affc4;animation:codeFlicker 6s steps(2) infinite}
+.motion-gear{right:8%;top:30%;font-size:150px;line-height:1;color:#5ef7ff77;text-shadow:0 0 35px #39e7f99e;animation:radarTurn 20s linear infinite}
+.motion-packet{right:18%;top:42%;width:12px;height:12px;background:#afff53;box-shadow:0 0 20px #a5ff53;animation:packetTravel 7s ease-in-out infinite}
+.motion-book{right:7%;top:23%;font:900 38px Consolas,monospace;color:#baff7d;border:2px solid #5ce7fc;padding:25px 18px;transform:perspective(500px) rotateY(-25deg);box-shadow:12px 12px 0 #0b5c73,0 0 35px #44dfff55;animation:bookFloat 6s ease-in-out infinite}
+.motion-book span{display:block;font-size:26px;text-align:center;color:#50dfff}
+.motion-signal{right:23%;top:22%;width:8px;height:8px;border-radius:50%;background:#aaff52;box-shadow:0 0 20px #b5ff52;animation:beacon 2s infinite}
+.motion-crane{right:8%;top:20%;width:230px;height:155px;opacity:.75}
+.crane-arm{position:absolute;right:0;top:12px;width:220px;height:5px;background:#4af1ee;transform-origin:right;animation:craneSwing 9s ease-in-out infinite}
+.crane-arm:after{content:"";position:absolute;right:0;top:-12px;width:6px;height:130px;background:#4af1ee}
+.crane-hook{position:absolute;left:40px;top:20px;width:2px;height:100px;background:#a7ff5b;animation:hookSwing 9s ease-in-out infinite}
+.crane-hook:after{content:"◡";position:absolute;bottom:-14px;left:-6px;font-size:24px;color:#a7ff5b}
+.motion-road{position:absolute;bottom:5%;left:5%;right:5%;height:40px;border-bottom:2px dashed #40e9ff8c}
+.motion-vehicle{animation-duration:19s}
+.motion-progress{right:5%;top:20%;width:240px;padding:16px;border:1px solid #4deeff99;border-radius:8px;background:#021724ad;font:700 11px Consolas,monospace;color:#a8ff58}
+.motion-progress i{display:block;margin-top:15px;height:9px;width:0;border-radius:4px;background:linear-gradient(90deg,#2ad8ff,#a4ff4b);box-shadow:0 0 15px #58ffab;animation:loadBar 10s ease-in-out infinite}
+.motion-hex{right:12%;top:40%;font-size:130px;color:#3edff777;animation:radarTurn 26s linear infinite}
+.motion-beacon{right:12%;top:30%;width:16px;height:16px;border-radius:50%;background:#b0ff52;box-shadow:0 0 22px #b0ff52;animation:beacon 3s ease-in-out infinite}
+.motion-ring{right:calc(12% - 52px);top:calc(30% - 52px);width:120px;height:120px;border:2px solid #55eaff99;border-radius:50%;animation:beaconRing 6s ease-out infinite}
+.motion-ring.ring-two{animation-delay:2s}.motion-ring.ring-three{animation-delay:4s}
+@keyframes radarTurn{to{transform:rotate(360deg)}}
+@keyframes beacon{50%{opacity:.4;filter:brightness(1.8)}}
+@keyframes beaconRing{0%{transform:scale(.25);opacity:.8}100%{transform:scale(2.5);opacity:0}}
+@keyframes routeDrive{0%{left:-5%;opacity:0}8%{opacity:1}90%{opacity:1}100%{left:95%;opacity:0}}
+@keyframes dbFloat{50%{transform:translateY(-15px) rotate(-4deg)}}
+@keyframes scoreBars{to{height:55px}}
+@keyframes codeFlicker{50%{opacity:.65}}
+@keyframes packetTravel{50%{transform:translate(-85px,55px)}}
+@keyframes bookFloat{50%{transform:translateY(-15px) perspective(500px) rotateY(-18deg)}}
+@keyframes craneSwing{50%{transform:rotate(-5deg)}}
+@keyframes hookSwing{50%{transform:translateX(16px)}}
+@keyframes loadBar{0%,10%{width:0}75%,90%{width:100%}100%{width:0}}
+/* Keep motion visible but out of the reading area, especially on small screens. */
+@media(max-width:900px){.motion-scene{opacity:.38}.motion-scene>*{filter:brightness(.7)}.motion-score,.motion-code,.motion-label{display:none}}
+@media(max-width:600px){.motion-scene{opacity:.25}.motion-db,.motion-book,.motion-crane,.motion-gear,.motion-progress{transform:scale(.6);transform-origin:right top}}
+@media(prefers-reduced-motion:reduce){.motion-scene *{animation:none!important}.motion-scene{opacity:.25}}

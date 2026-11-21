@@ -34,3 +34,27 @@ function terminal(){const el=$('#terminal');if(!el)return;el.textContent=lines.s
 let busy=false;function updateScroll(){if(busy)return;busy=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#progress').style.width=(max>0?scrollY/max*100:0)+'%';const sections=$$('main section[id]');let current='home';sections.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)current=s.id});$$('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));busy=false})}addEventListener('scroll',updateScroll,{passive:true});updateScroll();
 // Tilt only small panels; never move section artwork or clickable links away from the pointer.
 if(!reduce&&matchMedia('(pointer:fine)').matches){$$('[data-tilt]').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`});el.addEventListener('pointerleave',()=>{el.style.transform=''})})}
+
+// Optional, restrained section-specific audio. All cues require SOUND ON first.
+let lastSceneSound = 0;
+function sceneCue(id){
+  if(!soundOn || reduce || document.hidden || Date.now()-lastSceneSound<6500)return;
+  lastSceneSound=Date.now();
+  const notes={about:[280,420],portfolio:[420,620],skills:[580,760],education:[350,520],experience:[240,360],development:[510,720],contact:[660,880]};
+  const pair=notes[id];if(!pair)return;
+  tone(pair[0],.085,.014,'triangle');
+  setTimeout(()=>{if(soundOn)tone(pair[1],.11,.012,'sine')},130);
+}
+if('IntersectionObserver' in window){
+  const sceneObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
+    if(entry.isIntersecting)sceneCue(entry.target.id);
+  }),{threshold:.45});
+  document.querySelectorAll('main section[id]:not(#home)').forEach(s=>sceneObserver.observe(s));
+}
+let lastHoverTone=0;
+document.querySelectorAll('.project,.skill,.education-card,.career,.roadmap-card').forEach(card=>{
+  card.addEventListener('pointerenter',()=>{
+    if(!soundOn || Date.now()-lastHoverTone<1800)return;
+    lastHoverTone=Date.now();tone(590,.055,.008,'sine');
+  });
+});
