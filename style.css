@@ -77,3 +77,13 @@
 @media(max-width:900px){.motion-scene{opacity:.38}.motion-scene>*{filter:brightness(.7)}.motion-score,.motion-code,.motion-label{display:none}}
 @media(max-width:600px){.motion-scene{opacity:.25}.motion-db,.motion-book,.motion-crane,.motion-gear,.motion-progress{transform:scale(.6);transform-origin:right top}}
 @media(prefers-reduced-motion:reduce){.motion-scene *{animation:none!important}.motion-scene{opacity:.25}}
+
+/* FIX: artwork sits behind animation; animation sits behind actual content. */
+.section-bg{z-index:-2!important}
+.section::before{z-index:-1!important}
+.section .motion-scene{z-index:1!important;opacity:1!important;mix-blend-mode:screen}
+.section .section-inner{position:relative;z-index:2!important}
+.section .motion-scene .motion-radar,.section .motion-scene .motion-db,.section .motion-scene .motion-book,.section .motion-scene .motion-crane,.section .motion-scene .motion-progress{filter:drop-shadow(0 0 18px #28dfffa0)}
+@media(max-width:900px){.section .motion-scene{opacity:.65!important}}
+@media(max-width:600px){.section .motion-scene{opacity:.45!important}}
+@media(prefers-reduced-motion:reduce){.section .motion-scene *{animation:none!important}}

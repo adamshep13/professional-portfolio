@@ -22,15 +22,15 @@ sound?.addEventListener('click',async()=>{
 document.querySelectorAll('.btn,.contact-card,.resume-nav,nav a').forEach(el=>el.addEventListener('click',()=>tone(720,.075,.022,'triangle')));
 // A soft flyover cue on the homepage, approximately once per animation cycle.
 function flyoverCue(){if(!soundOn||reduce||document.hidden||!$('#home')||$('#home').getBoundingClientRect().bottom<0)return;
- for(let i=0;i<7;i++)setTimeout(()=>tone(115+i*13,.17,.012,'sawtooth'),i*135);
+ for(let i=0;i<7;i++)setTimeout(()=>tone(115+i*13,.22,.024,'sawtooth'),i*135);
 }
 setInterval(flyoverCue,27000);
 
 const phrases=['Computer Information Systems','Python • SQL • FastAPI','Data Analytics & Cybersecurity','Leadership • Operations • Technology'];let pi=0,ci=0,back=false;
-function type(){const el=$('#typed');if(!el)return;const phrase=phrases[pi];el.textContent=phrase.slice(0,ci);if(!back&&ci<phrase.length){ci++;if(Date.now()-lastKey>55){tone(420+Math.random()*250,.025,.007,'triangle');lastKey=Date.now()}setTimeout(type,85)}else if(!back){back=true;setTimeout(type,1800)}else if(ci>0){ci--;setTimeout(type,32)}else{back=false;pi=(pi+1)%phrases.length;setTimeout(type,330)}}
+function type(){const el=$('#typed');if(!el)return;const phrase=phrases[pi];el.textContent=phrase.slice(0,ci);if(!back&&ci<phrase.length){ci++;if(Date.now()-lastKey>55){tone(420+Math.random()*250,.038,.021,'triangle');lastKey=Date.now()}setTimeout(type,85)}else if(!back){back=true;setTimeout(type,1800)}else if(ci>0){ci--;setTimeout(type,32)}else{back=false;pi=(pi+1)%phrases.length;setTimeout(type,330)}}
 if(!reduce)type();
 const lines=['> initializing portfolio...','> loading skills: Python, SQL, FastAPI','> verifying projects: 3 found','> experience: leadership + operations','> systems ready.'];let li=0;
-function terminal(){const el=$('#terminal');if(!el)return;el.textContent=lines.slice(0,li+1).join('\n');if(soundOn)tone(390+li*60,.055,.014,'triangle');li=(li+1)%lines.length;if(li===0)el.textContent=lines.join('\n');if(!reduce)setTimeout(terminal,2400)}terminal();
+function terminal(){const el=$('#terminal');if(!el)return;el.textContent=lines.slice(0,li+1).join('\n');if(soundOn)tone(390+li*60,.085,.028,'triangle');li=(li+1)%lines.length;if(li===0)el.textContent=lines.join('\n');if(!reduce)setTimeout(terminal,2400)}terminal();
 let busy=false;function updateScroll(){if(busy)return;busy=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#progress').style.width=(max>0?scrollY/max*100:0)+'%';const sections=$$('main section[id]');let current='home';sections.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)current=s.id});$$('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));busy=false})}addEventListener('scroll',updateScroll,{passive:true});updateScroll();
 // Tilt only small panels; never move section artwork or clickable links away from the pointer.
 if(!reduce&&matchMedia('(pointer:fine)').matches){$$('[data-tilt]').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`});el.addEventListener('pointerleave',()=>{el.style.transform=''})})}
@@ -42,8 +42,8 @@ function sceneCue(id){
   lastSceneSound=Date.now();
   const notes={about:[280,420],portfolio:[420,620],skills:[580,760],education:[350,520],experience:[240,360],development:[510,720],contact:[660,880]};
   const pair=notes[id];if(!pair)return;
-  tone(pair[0],.085,.014,'triangle');
-  setTimeout(()=>{if(soundOn)tone(pair[1],.11,.012,'sine')},130);
+  tone(pair[0],.14,.035,'triangle');
+  setTimeout(()=>{if(soundOn)tone(pair[1],.16,.03,'sine')},130);
 }
 if('IntersectionObserver' in window){
   const sceneObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
@@ -55,6 +55,6 @@ let lastHoverTone=0;
 document.querySelectorAll('.project,.skill,.education-card,.career,.roadmap-card').forEach(card=>{
   card.addEventListener('pointerenter',()=>{
     if(!soundOn || Date.now()-lastHoverTone<1800)return;
-    lastHoverTone=Date.now();tone(590,.055,.008,'sine');
+    lastHoverTone=Date.now();tone(590,.065,.017,'sine');
   });
 });
