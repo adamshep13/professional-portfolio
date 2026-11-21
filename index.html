@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-  <meta name="description" content="Professional portfolio showcasing leadership, technology, education, and projects.">
+  <meta name="description"
+        content="Adam Shepard's professional portfolio featuring technology projects, software development, data analytics, leadership, and education.">
 
-  <title>Adam Shepard | Professional Portfolio</title>
+  <title>Adam Shepard | Technology Portfolio</title>
 
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
@@ -14,215 +16,621 @@
 
 <body>
 
-  <!-- Navigation -->
-  <header>
-    <nav>
-      <a href="#home" class="logo">Adam Shepard</a>
+  <!-- BACKGROUND TECHNOLOGY EFFECTS -->
+  <div class="tech-background" aria-hidden="true">
+    <div class="grid-overlay"></div>
+    <div class="ambient-glow glow-blue"></div>
+    <div class="ambient-glow glow-green"></div>
+  </div>
 
-      <ul>
+  <!-- NAVIGATION -->
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+
+      <a href="#home" class="logo">
+        <span class="logo-bracket">&lt;</span>
+        Adam.Shepard
+        <span class="logo-bracket">/&gt;</span>
+      </a>
+
+      <button class="menu-toggle"
+              type="button"
+              aria-label="Toggle navigation"
+              aria-expanded="false">
+        &#9776;
+      </button>
+
+      <ul class="nav-links">
         <li><a href="#home">Home</a></li>
         <li><a href="#about">About</a></li>
-        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#portfolio">Projects</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#education">Education</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#development">Development</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+
     </nav>
   </header>
 
   <main>
 
-    <!-- Section 1: Home -->
-    <section id="home">
-      <h1>Adam Shepard</h1>
+    <!-- SECTION 1: HOME -->
+    <section id="home" class="hero">
 
-      <h2>
-        Computer Information Systems Student |
-        Military Veteran | Technology Professional
-      </h2>
+      <div class="hero-content">
 
-      <p>
-        Welcome to my professional portfolio.
-        Explore my background, technical skills,
-        leadership experience, and academic projects.
-      </p>
+        <div class="status-line">
+          <span class="status-dot"></span>
+          SYSTEM ONLINE // PORTFOLIO INITIALIZED
+        </div>
 
-      <a href="#portfolio">Explore My Work</a>
+        <p class="hero-eyebrow">
+          WELCOME TO MY DIGITAL PORTFOLIO
+        </p>
+
+        <h1>
+          Adam
+          <span class="gradient-text">Shepard</span>
+        </h1>
+
+        <div class="hero-terminal-line">
+          <span class="prompt">&gt;</span>
+          <span id="typing-text">
+            Computer Information Systems
+          </span>
+          <span class="cursor">_</span>
+        </div>
+
+        <p class="hero-description">
+          Military veteran, technology student,
+          and aspiring technology professional
+          combining leadership experience with
+          software development, data analytics,
+          cybersecurity, and technical problem-solving.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#portfolio" class="btn btn-primary">
+            Explore My Projects
+          </a>
+
+          <a href="#about" class="btn btn-secondary">
+            About Me
+          </a>
+        </div>
+
+        <div class="hero-tech-tags">
+          <span>PYTHON</span>
+          <span>SQL</span>
+          <span>DATA ANALYTICS</span>
+          <span>CYBERSECURITY</span>
+        </div>
+
+      </div>
+
+      <!-- HARDWARE VISUALIZATION -->
+      <div class="hero-visual">
+
+        <div class="hardware-scene">
+
+          <div class="hardware-label">
+            CORE_SYSTEM // ACTIVE
+          </div>
+
+          <!-- CIRCUIT BOARD -->
+          <div class="circuit-board">
+
+            <div class="circuit-line line-1"></div>
+            <div class="circuit-line line-2"></div>
+            <div class="circuit-line line-3"></div>
+            <div class="circuit-line line-4"></div>
+            <div class="circuit-line line-5"></div>
+            <div class="circuit-line line-6"></div>
+            <div class="circuit-line line-7"></div>
+            <div class="circuit-line line-8"></div>
+
+            <div class="processor-glow"></div>
+
+            <div class="processor">
+              <div class="processor-inner">
+                <div class="processor-icon">
+                  &lt;/&gt;
+                </div>
+                <div class="processor-title">
+                  A.S.
+                </div>
+                <div class="processor-subtitle">
+                  TECHNOLOGY CORE
+                </div>
+              </div>
+            </div>
+
+            <div class="circuit-node node-1"></div>
+            <div class="circuit-node node-2"></div>
+            <div class="circuit-node node-3"></div>
+            <div class="circuit-node node-4"></div>
+
+          </div>
+
+          <div class="hardware-footer">
+            <span>CPU STATUS: ONLINE</span>
+            <span>SYS.V1.0</span>
+          </div>
+
+        </div>
+
+        <!-- FLOATING CODE TERMINAL -->
+        <div class="floating-terminal">
+
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+
+            <span>developer.py</span>
+          </div>
+
+          <div class="terminal-body">
+            <div>
+              <span class="line-number">01</span>
+              <span class="code-purple">class</span>
+              <span class="code-blue"> Developer</span>:
+            </div>
+
+            <div>
+              <span class="line-number">02</span>
+              &nbsp;&nbsp;name =
+              <span class="code-green">
+                "Adam Shepard"
+              </span>
+            </div>
+
+            <div>
+              <span class="line-number">03</span>
+              &nbsp;&nbsp;focus = [
+            </div>
+
+            <div>
+              <span class="line-number">04</span>
+              &nbsp;&nbsp;&nbsp;
+              <span class="code-green">"Software"</span>,
+            </div>
+
+            <div>
+              <span class="line-number">05</span>
+              &nbsp;&nbsp;&nbsp;
+              <span class="code-green">"Data"</span>,
+            </div>
+
+            <div>
+              <span class="line-number">06</span>
+              &nbsp;&nbsp;&nbsp;
+              <span class="code-green">"Security"</span>
+            </div>
+
+            <div>
+              <span class="line-number">07</span>
+              &nbsp;&nbsp;]
+            </div>
+
+            <div class="terminal-output">
+              &gt; Portfolio loaded successfully_
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="scroll-indicator">
+        SCROLL TO EXPLORE
+        <span>&darr;</span>
+      </div>
+
     </section>
 
-    <!-- Section 2: About Me -->
-    <section id="about">
-      <h2>About Me</h2>
+    <!-- SECTION 2: ABOUT -->
+    <section id="about" class="content-section">
 
-      <p>
-        My professional background combines military
-        leadership, civilian industry experience,
-        and a growing technical education.
-      </p>
+      <div class="section-heading">
+        <span class="section-number">01 // ABOUT</span>
+        <h2>About <span>Me</span></h2>
+        <p>
+          Leadership, experience, and technology.
+        </p>
+      </div>
 
-      <p>
-        During my military career, I developed
-        experience in leadership, teamwork,
-        problem-solving, and making decisions
-        in demanding environments.
-      </p>
+      <div class="about-layout">
 
-      <p>
-        I am currently pursuing my Bachelor of Science
-        in Computer Information Systems at
-        Saint Louis University.
-        My goal is to apply my experience and education
-        toward a career in technology.
-      </p>
+        <div class="glass-panel">
+          <h3>My Background</h3>
+
+          <p>
+            My professional background combines
+            military leadership, civilian industry
+            experience, and technical education.
+          </p>
+
+          <p>
+            During my military career, I developed
+            leadership, teamwork, technical expertise,
+            and the ability to make sound decisions
+            in demanding environments.
+          </p>
+
+          <p>
+            I am pursuing my Bachelor of Science
+            in Computer Information Systems at
+            Saint Louis University, with the goal
+            of transitioning into a technology career.
+          </p>
+        </div>
+
+        <div class="info-panel">
+          <div class="info-item">
+            <span>BACKGROUND</span>
+            <strong>Military & Civilian Leadership</strong>
+          </div>
+
+          <div class="info-item">
+            <span>EDUCATION</span>
+            <strong>Computer Information Systems</strong>
+          </div>
+
+          <div class="info-item">
+            <span>FOCUS</span>
+            <strong>Technology & Problem-Solving</strong>
+          </div>
+
+          <div class="info-item">
+            <span>OBJECTIVE</span>
+            <strong>Professional Growth in Technology</strong>
+          </div>
+        </div>
+
+      </div>
     </section>
 
-    <!-- Section 3: Portfolio -->
-    <section id="portfolio">
-      <h2>Portfolio & Projects</h2>
+    <!-- SECTION 3: PORTFOLIO -->
+    <section id="portfolio" class="content-section">
 
-      <p>
-        The following projects demonstrate my
-        technical knowledge, problem-solving abilities,
-        and practical application of coursework.
-      </p>
+      <div class="section-heading">
+        <span class="section-number">02 // PROJECTS</span>
+        <h2>Featured <span>Projects</span></h2>
+        <p>
+          Practical applications of programming,
+          databases, analytics, and software design.
+        </p>
+      </div>
 
-      <article class="project-card">
-        <h3>
-          The Coaching Advantage:
-          Soccer Analytics Portal
-        </h3>
+      <div class="projects-grid">
+
+        <article class="project-card">
+
+          <div class="project-visual analytics-visual">
+            <div class="visual-code">
+              DATA_ANALYTICS.EXE
+            </div>
+            <div class="chart-bars">
+              <span></span><span></span>
+              <span></span><span></span>
+              <span></span>
+            </div>
+          </div>
+
+          <div class="project-content">
+            <span class="project-label">
+              PROJECT 01 // DATA ANALYTICS
+            </span>
+
+            <h3>
+              The Coaching Advantage:
+              Soccer Analytics Portal
+            </h3>
+
+            <p>
+              An analytics project focused on
+              presenting soccer performance data
+              and supporting data-driven decisions.
+            </p>
+
+            <div class="project-tags">
+              <span>Analytics</span>
+              <span>Visualization</span>
+              <span>Data</span>
+            </div>
+          </div>
+
+        </article>
+
+        <article class="project-card">
+
+          <div class="project-visual database-visual">
+            <div class="visual-code">
+              DATABASE_SYSTEMS.SQL
+            </div>
+            <div class="database-symbol">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+          </div>
+
+          <div class="project-content">
+            <span class="project-label">
+              PROJECT 02 // DATABASES
+            </span>
+
+            <h3>
+              Advanced Database Systems:
+              AdventureWorks2022
+            </h3>
+
+            <p>
+              Advanced database coursework
+              involving SQL, database management,
+              and practical database concepts.
+            </p>
+
+            <div class="project-tags">
+              <span>SQL</span>
+              <span>Databases</span>
+              <span>SSMS</span>
+            </div>
+          </div>
+
+        </article>
+
+        <article class="project-card">
+
+          <div class="project-visual dispatch-visual">
+            <div class="visual-code">
+              DISPATCH_SYSTEM.PY
+            </div>
+            <div class="dispatch-network">
+              <span class="dispatch-point"></span>
+              <span class="dispatch-path"></span>
+              <span class="dispatch-point"></span>
+              <span class="dispatch-path"></span>
+              <span class="dispatch-point"></span>
+            </div>
+          </div>
+
+          <div class="project-content">
+            <span class="project-label">
+              PROJECT 03 // SOFTWARE
+            </span>
+
+            <h3>
+              ASP Dispatcher and
+              Inventory Application
+            </h3>
+
+            <p>
+              An ongoing CIS capstone project
+              addressing dispatch management,
+              inventory visibility, vehicle loading,
+              and delivery scheduling.
+            </p>
+
+            <div class="project-tags">
+              <span>Python</span>
+              <span>FastAPI</span>
+              <span>SQLite</span>
+            </div>
+          </div>
+
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: SKILLS -->
+    <section id="skills" class="content-section">
+
+      <div class="section-heading">
+        <span class="section-number">03 // SKILLS</span>
+        <h2>Technical <span>Skills</span></h2>
+        <p>
+          Technologies and tools supporting
+          my professional development.
+        </p>
+      </div>
+
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <span class="skill-icon">&lt;/&gt;</span>
+          <h3>Programming</h3>
+          <p>Python, C++, R, JavaScript fundamentals</p>
+        </div>
+
+        <div class="skill-card">
+          <span class="skill-icon">{ }</span>
+          <h3>Databases</h3>
+          <p>SQL, SQLite, SQL Server Management Studio</p>
+        </div>
+
+        <div class="skill-card">
+          <span class="skill-icon">01</span>
+          <h3>Data Analytics</h3>
+          <p>Tableau, R, ggplot2, data visualization</p>
+        </div>
+
+        <div class="skill-card">
+          <span class="skill-icon">#</span>
+          <h3>Systems & Security</h3>
+          <p>Cybersecurity, cloud, systems administration</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: EDUCATION -->
+    <section id="education" class="content-section">
+
+      <div class="section-heading">
+        <span class="section-number">04 // EDUCATION</span>
+        <h2>Education & <span>Training</span></h2>
+      </div>
+
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <span class="timeline-marker"></span>
+          <div class="glass-panel">
+            <h3>Saint Louis University</h3>
+            <p>
+              Bachelor of Science in
+              Computer Information Systems
+            </p>
+            <span class="timeline-status">
+              DEGREE IN PROGRESS
+            </span>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <span class="timeline-marker"></span>
+          <div class="glass-panel">
+            <h3>Centriq Training</h3>
+            <p>
+              Technical training focused on
+              cybersecurity, cloud technologies,
+              and systems administration.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: EXPERIENCE -->
+    <section id="experience" class="content-section">
+
+      <div class="section-heading">
+        <span class="section-number">05 // EXPERIENCE</span>
+        <h2>Professional <span>Experience</span></h2>
+      </div>
+
+      <div class="experience-grid">
+
+        <div class="glass-panel">
+          <span class="experience-category">
+            MILITARY LEADERSHIP
+          </span>
+          <h3>United States Army</h3>
+          <p>
+            Noncommissioned Officer with experience
+            in leadership, personnel training,
+            equipment readiness, operational
+            accountability, and mission-critical
+            decision-making.
+          </p>
+        </div>
+
+        <div class="glass-panel">
+          <span class="experience-category">
+            CIVILIAN OPERATIONS
+          </span>
+          <h3>Transportation & Logistics</h3>
+          <p>
+            Professional experience in transportation,
+            logistics, safety, equipment operations,
+            and operational problem-solving.
+          </p>
+        </div>
+
+        <div class="glass-panel">
+          <span class="experience-category">
+            CONSTRUCTION
+          </span>
+          <h3>Construction & Leadership</h3>
+          <p>
+            Experience involving construction,
+            technical standards, teamwork,
+            and supervisory responsibilities.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: DEVELOPMENT -->
+    <section id="development" class="content-section">
+
+      <div class="section-heading">
+        <span class="section-number">06 // DEVELOPMENT</span>
+        <h2>Professional <span>Development</span></h2>
+      </div>
+
+      <div class="glass-panel">
+        <h3>Continuous Learning</h3>
 
         <p>
-          An analytics project focused on presenting
-          soccer performance data and supporting
-          data-driven decisions.
+          My professional development focuses
+          on strengthening my technical skills,
+          expanding my education, and applying
+          my previous leadership experience
+          to new challenges in technology.
         </p>
-      </article>
-
-      <article class="project-card">
-        <h3>
-          Advanced Database Systems:
-          AdventureWorks2022
-        </h3>
 
         <p>
-          Database coursework involving SQL,
-          database management, and the application
-          of advanced database concepts.
+          My areas of interest include software
+          engineering, data analytics,
+          cybersecurity, artificial intelligence,
+          and technology leadership.
         </p>
-      </article>
+      </div>
+    </section>
 
-      <article class="project-card">
-        <h3>
-          ASP Dispatcher and Inventory Application
-        </h3>
+    <!-- SECTION 8: CONTACT -->
+    <section id="contact" class="content-section">
+
+      <div class="section-heading">
+        <span class="section-number">07 // CONTACT</span>
+        <h2>Let's <span>Connect</span></h2>
+      </div>
+
+      <div class="contact-panel glass-panel">
 
         <p>
-          An ongoing CIS capstone project focused on
-          dispatch management, inventory visibility,
-          vehicle loading, and delivery scheduling.
+          Thank you for exploring my professional
+          portfolio. I welcome opportunities
+          to connect regarding technology,
+          professional development,
+          and future career opportunities.
         </p>
-      </article>
-    </section>
 
-    <!-- Section 4: Technical Skills -->
-    <section id="skills">
-      <h2>Technical Skills</h2>
+        <a
+          href="https://github.com/adamshep13"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary">
+          View My GitHub
+        </a>
 
-      <ul>
-        <li>Python and C++</li>
-        <li>SQL and Database Management</li>
-        <li>R and Data Analysis</li>
-        <li>Tableau and Data Visualization</li>
-        <li>FastAPI and SQLite</li>
-        <li>Cybersecurity Fundamentals</li>
-        <li>Cloud and Systems Administration</li>
-        <li>Technical Problem-Solving</li>
-      </ul>
-    </section>
-
-    <!-- Section 5: Education -->
-    <section id="education">
-      <h2>Education & Training</h2>
-
-      <h3>Saint Louis University</h3>
-
-      <p>
-        Bachelor of Science in Computer Information
-        Systems — In Progress
-      </p>
-
-      <h3>Centriq Training</h3>
-
-      <p>
-        Technical training focused on cybersecurity,
-        cloud technologies, and systems administration.
-      </p>
-    </section>
-
-    <!-- Section 6: Experience -->
-    <section id="experience">
-      <h2>Professional Experience</h2>
-
-      <h3>United States Army</h3>
-
-      <p>
-        Noncommissioned Officer with experience
-        in leadership, training, equipment readiness,
-        and mission-critical operations.
-      </p>
-
-      <h3>Civilian Industry Experience</h3>
-
-      <p>
-        Experience in construction, transportation,
-        logistics, safety, and operational
-        problem-solving.
-      </p>
-    </section>
-
-    <!-- Section 7: Professional Development -->
-    <section id="development">
-      <h2>Professional Development</h2>
-
-      <p>
-        My professional development focuses on
-        continuing my education, expanding my
-        technical abilities, and transitioning
-        into the technology industry.
-      </p>
-
-      <p>
-        I am particularly interested in software
-        development, data analytics, cybersecurity,
-        and technology leadership.
-      </p>
-    </section>
-
-    <!-- Section 8: Contact -->
-    <section id="contact">
-      <h2>Contact</h2>
-
-      <p>
-        Thank you for visiting my portfolio.
-        I welcome opportunities to connect
-        and discuss technology, professional
-        development, and future opportunities.
-      </p>
-
-      <p>
-        Contact information and professional
-        profile links will be added here.
-      </p>
+      </div>
     </section>
 
   </main>
 
-  <footer>
-    <p>&copy; 2026 Adam Shepard.
-       All rights reserved.</p>
+  <!-- FOOTER -->
+  <footer class="site-footer">
+
+    <p>
+      &copy; 2026 Adam Shepard.
+      All rights reserved.
+    </p>
+
+    <p class="footer-code">
+      &lt; Built with HTML, CSS & JavaScript /&gt;
+    </p>
+
   </footer>
 
 </body>
