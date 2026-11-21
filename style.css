@@ -31,3 +31,30 @@
 .contact-link:hover .contact-icon{animation:icon-glow 1.8s ease-in-out infinite}
 @media(max-width:900px){.contact-grid{grid-template-columns:1fr}.section-art{background-size:650px auto;opacity:.2}.skill:nth-child(2n){transform:none}}
 @media(prefers-reduced-motion:reduce){.section-art,.project-screen:after{animation:none!important}.project:nth-child(n) .project-screen{transform:none}}
+
+
+/* CINEMATIC VISUAL UPGRADE — real imagery + vivid PCB backgrounds */
+:root{--electric:#39ff9e;--cyan:#39cfff}
+body{background:#020912}
+.site-noise{opacity:.18}
+.section{isolation:isolate;position:relative;overflow:hidden}
+.section::before{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;background-image:radial-gradient(circle at 15% 25%,rgba(0,168,255,.17),transparent 40%),radial-gradient(circle at 87% 75%,rgba(0,255,133,.13),transparent 42%),url('circuit.svg');background-size:auto,auto,1150px auto;background-repeat:no-repeat,no-repeat,repeat-y;background-position:center,center,center top;opacity:.85}
+.section::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,rgba(2,9,18,.28),transparent 45%,rgba(2,9,18,.25));}
+#home{background:radial-gradient(ellipse at 76% 37%,rgba(0,199,255,.19),transparent 49%),linear-gradient(115deg,#020a14 4%,#05192c 65%,#020911);min-height:730px}
+#home::before{background-image:url('chip-art.webp'),url('circuit.svg');background-repeat:no-repeat,repeat;background-size:min(64vw,860px) auto,1200px auto;background-position:right 0 top 10%,center;opacity:.95;mask-image:linear-gradient(90deg,transparent 28%,black 68%)}
+#home::after{background:linear-gradient(90deg,#020a14 0%,rgba(2,10,20,.94) 32%,rgba(2,10,20,.3) 70%,rgba(2,10,20,.18))}
+#about::before{background-image:linear-gradient(90deg,rgba(2,9,18,.7),rgba(2,9,18,.18)),url('veteran-art.webp'),url('circuit.svg');background-size:auto,440px auto,1100px auto;background-position:center,right 2% center,center;background-repeat:no-repeat,no-repeat,repeat;opacity:.72}
+#portfolio::before{background-image:radial-gradient(ellipse at 72% 35%,rgba(0,170,255,.23),transparent 45%),url('processor.svg'),url('circuit.svg');background-size:auto,670px auto,1200px auto;background-position:center,right -80px center,center;opacity:.8}
+#skills::before{background-image:radial-gradient(ellipse at 22% 50%,rgba(0,255,130,.18),transparent 52%),url('chip-art.webp'),url('circuit.svg');background-size:auto,520px auto,1100px auto;background-position:center,left -170px center,center;opacity:.58}
+#education::before,#development::before{background-image:radial-gradient(ellipse at 80% 30%,rgba(0,180,255,.17),transparent 60%),url('processor.svg'),url('circuit.svg');background-size:auto,640px auto,1150px auto;background-position:center,right -100px center,center;opacity:.7}
+#experience::before{background-image:radial-gradient(ellipse at 20% 30%,rgba(0,255,145,.16),transparent 48%),url('veteran-art.webp'),url('circuit.svg');background-size:auto,450px auto,1150px auto;background-position:center,left -120px center,center;opacity:.5}
+#contact::before{background-image:radial-gradient(ellipse at 50% 35%,rgba(0,190,255,.18),transparent 55%),url('chip-art.webp'),url('circuit.svg');background-size:auto,590px auto,1150px auto;background-position:center,right -140px center,center;opacity:.65}
+.section-art{opacity:.28!important;mix-blend-mode:screen}
+.panel,.project,.skill,.career{background-color:rgba(4,17,30,.83)!important;backdrop-filter:blur(15px);-webkit-backdrop-filter:blur(15px)}
+.project:nth-child(odd){transform:perspective(1300px) rotateY(-1.8deg)}
+.project:nth-child(even){transform:perspective(1300px) rotateY(1.8deg)}
+.project{transition:transform .5s ease,box-shadow .5s ease}
+.project:hover{transform:perspective(1300px) rotateY(0) translateY(-8px)}
+.contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(max-width:900px){#home::before{background-size:760px auto,1100px auto;background-position:calc(100% + 230px) 30px,center;opacity:.55}#home::after{background:linear-gradient(90deg,rgba(2,10,20,.96),rgba(2,10,20,.6))}.section::before{opacity:.5}.contact-grid{grid-template-columns:1fr}.project:nth-child(n){transform:none}}
+@media(prefers-reduced-motion:reduce){.project{transition:none}}
