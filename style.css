@@ -123,3 +123,37 @@
 @keyframes spinRing{to{transform:rotate(360deg)}}
 @media(max-width:800px){.skill{min-height:240px}.skill-visual{height:70px}.skill-glyph{font-size:44px}}
 @media(prefers-reduced-motion:reduce){.skill-visual *, .project-live *, .card-motion *{animation:none!important}}
+
+/* V5: ambient motion is visible before interaction; preserve every content paragraph. */
+:root{--neon-lime:#a5ff38;--neon-ice:#31dfff}
+.skill,.education-card,.career,.roadmap-card,.contact-card,.feature,.copy-panel{animation:cardHoverDrift 7.5s ease-in-out infinite;will-change:transform;background-image:linear-gradient(138deg,rgba(18,72,91,.44),rgba(4,15,30,.92) 47%,rgba(39,78,37,.24))!important;border-color:rgba(75,234,252,.65)!important;box-shadow:0 12px 38px #0008,inset 0 0 32px #2fe4ff12,0 0 12px #32dcff18!important}
+.skill:nth-child(3n+2),.career:nth-child(3n+2),.roadmap-card:nth-child(2n),.contact-card:nth-child(2n),.education-card:nth-child(2n){animation-delay:-3.75s;background-image:linear-gradient(125deg,rgba(54,87,28,.46),rgba(3,17,30,.93) 55%,rgba(7,65,89,.34))!important;border-color:rgba(166,255,58,.58)!important}
+.skill:nth-child(3n),.career:nth-child(3n),.contact-card:nth-child(3n){animation-delay:-1.8s}
+.skill::before,.education-card::before,.career::before,.roadmap-card::before,.contact-card::before{content:"";position:absolute;top:0;left:-75%;width:55%;height:2px;background:linear-gradient(90deg,transparent,#a5ff38,#35f5ff,transparent);box-shadow:0 0 18px #4efbff;animation:edgeSweep 8s linear infinite;pointer-events:none}
+.skill:nth-child(2n)::before,.roadmap-card:nth-child(2n)::before{animation-delay:-4s}
+.skill::after,.education-card::after,.career::after,.roadmap-card::after,.contact-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(circle at 90% 5%,#a5ff3819,transparent 36%);opacity:.85}
+.skill:hover,.education-card:hover,.career:hover,.roadmap-card:hover,.contact-card:hover{animation-play-state:paused;transform:translateY(-10px) scale(1.015)!important;box-shadow:0 20px 50px #000a,0 0 34px #3feaff65,0 0 22px #a5ff3845!important}
+.skill-visual{background:linear-gradient(90deg,#0b394a70,#0d312c60);border-radius:10px;padding:4px 14px;left:12px;right:12px;top:12px;height:84px}
+.skill h3,.education-card h3,.career h3,.roadmap-card h3{color:#d6fbff;text-shadow:0 0 14px #33e9ff33}
+.skill:nth-child(2n) h3,.roadmap-card:nth-child(2n) h3{color:#caff8a}
+.project{animation:cardHoverDrift 9s ease-in-out infinite;animation-delay:-1.5s;border-color:#3cdaf077!important}
+.project:nth-child(2){animation-delay:-5s}.project:nth-child(3){animation-delay:-3s}
+.project:hover{animation-play-state:paused}
+.project-image img{animation:projectImageFloat 13s ease-in-out infinite alternate;transform-origin:center}
+.project:nth-child(2) .project-image img{animation-delay:-4s}.project:nth-child(3) .project-image img{animation-delay:-8s}
+.project-image{aspect-ratio:1.55!important}
+.project-live{width:96px;height:55px;right:10px;top:10px;opacity:.94}
+.motion-truck,.motion-vehicle{display:block;width:155px;height:76px;bottom:-14px;font-size:initial;animation:routeDrive 16s linear infinite;filter:drop-shadow(0 0 10px #34dfff)}
+.truck-svg{display:block;width:100%;height:100%;overflow:visible}
+.motion-road,.motion-route{height:68px}
+.motion-projects .motion-route,.motion-experience .motion-road{bottom:3%}
+.motion-score{right:4%;top:12%}
+.motion-db{right:6%;top:30%;opacity:.75}
+.contact-card{min-height:170px;transition:filter .3s,border-color .3s}
+.contact-card:nth-child(2n) small{color:#67f0ff}
+.card-motion{filter:drop-shadow(0 0 12px #43eaff)}
+@keyframes cardHoverDrift{0%,100%{translate:0 0}50%{translate:0 -10px}}
+@keyframes edgeSweep{0%{left:-75%}70%,100%{left:115%}}
+@keyframes projectImageFloat{0%{transform:scale(1.02) translateX(-1.2%)}100%{transform:scale(1.085) translateX(1.2%)}}
+@media(max-width:900px){.skill,.education-card,.career,.roadmap-card,.contact-card{animation-duration:10s}.motion-truck,.motion-vehicle{width:105px}}
+@media(prefers-reduced-motion:reduce){.skill,.education-card,.career,.roadmap-card,.contact-card,.feature,.copy-panel,.project,.project-image img{animation:none!important}.skill::before,.education-card::before,.career::before,.roadmap-card::before,.contact-card::before{animation:none!important;left:0}}

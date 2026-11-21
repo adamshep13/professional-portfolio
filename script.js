@@ -7,72 +7,41 @@ $$('nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('ope
 $('#year').textContent=new Date().getFullYear();
 const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if('IntersectionObserver' in window){const obs=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}}),{threshold:.07});$$('.reveal').forEach(el=>obs.observe(el))}else $$('.reveal').forEach(el=>el.classList.add('visible'));
-const sound=$('#sound');let audioCtx=null,soundOn=false,lastKey=0;
-function tone(freq=500,duration=.06,vol=.06,type='sine'){
- if(!soundOn)return;
- try{audioCtx??=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(Math.min(vol*2.4,.16),audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+duration)}catch(e){}
+const sound=$('#sound');
+let audioCtx=null,soundOn=false,activeSection='home';
+const activeVoices=new Set();
+function getAudio(){if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx}
+function stopSceneAudio(){for(const node of activeVoices){try{node.stop()}catch(e){}}activeVoices.clear()}
+function tone(freq=500,duration=.1,vol=.045,type='sine'){
+ if(!soundOn||document.hidden)return;
+ try{const ctx=getAudio(),osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(Math.max(.001,vol),ctx.currentTime);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+duration);osc.connect(gain);gain.connect(ctx.destination);activeVoices.add(osc);osc.onended=()=>activeVoices.delete(osc);osc.start();osc.stop(ctx.currentTime+duration)}catch(e){}
 }
-sound?.addEventListener('click',async()=>{
- soundOn=!soundOn;sound.setAttribute('aria-pressed',String(soundOn));sound.textContent=soundOn?'♫ SOUND ON':'♫ SOUND OFF';
- if(soundOn){try{audioCtx??=new (window.AudioContext||window.webkitAudioContext)();await audioCtx.resume()}catch(e){};
-  tone(520,.18,.055,'triangle');setTimeout(()=>tone(780,.24,.045,'sine'),130);setTimeout(()=>tone(1040,.3,.03,'sine'),290);
- }
-});
-// Gentle UI sounds on intentional interactions; no sounds when muted.
-document.querySelectorAll('.btn,.contact-card,.resume-nav,nav a').forEach(el=>el.addEventListener('click',()=>tone(720,.075,.022,'triangle')));
-// A soft flyover cue on the homepage, approximately once per animation cycle.
-function flyoverCue(){if(!soundOn||reduce||document.hidden||!$('#home')||$('#home').getBoundingClientRect().bottom<0)return;
- for(let i=0;i<7;i++)setTimeout(()=>tone(115+i*13,.22,.024,'sawtooth'),i*135);
+// One-shot aircraft noise, filtered and faded, synchronized to a visible flight cycle.
+function flyoverCue(){
+ if(!soundOn||reduce||document.hidden||activeSection!=='home')return;
+ try{const ctx=getAudio(),duration=2.1,buffer=ctx.createBuffer(1,Math.floor(ctx.sampleRate*duration),ctx.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.28;const src=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();src.buffer=buffer;filter.type='lowpass';filter.frequency.setValueAtTime(210,ctx.currentTime);filter.frequency.linearRampToValueAtTime(650,ctx.currentTime+.8);filter.frequency.linearRampToValueAtTime(180,ctx.currentTime+duration);gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.linearRampToValueAtTime(.16,ctx.currentTime+.5);gain.gain.linearRampToValueAtTime(.0001,ctx.currentTime+duration);src.connect(filter);filter.connect(gain);gain.connect(ctx.destination);activeVoices.add(src);src.onended=()=>activeVoices.delete(src);src.start();src.stop(ctx.currentTime+duration)}catch(e){}
 }
-setInterval(flyoverCue,27000);
-
-const phrases=['Computer Information Systems','Python • SQL • FastAPI','Data Analytics & Cybersecurity','Leadership • Operations • Technology'];let pi=0,ci=0,back=false;
-function type(){const el=$('#typed');if(!el)return;const phrase=phrases[pi];el.textContent=phrase.slice(0,ci);if(!back&&ci<phrase.length){ci++;if(Date.now()-lastKey>55){tone(420+Math.random()*250,.038,.021,'triangle');lastKey=Date.now()}setTimeout(type,85)}else if(!back){back=true;setTimeout(type,1800)}else if(ci>0){ci--;setTimeout(type,32)}else{back=false;pi=(pi+1)%phrases.length;setTimeout(type,330)}}
+const plane=$('.plane');plane?.addEventListener('animationiteration',flyoverCue);
+function sectionCue(id){if(!soundOn||document.hidden)return;
+ const melodies={about:[280,410],portfolio:[360,570,730],skills:[600,810],education:[420,560],experience:[210,320],development:[460,660,780],contact:[680,920]};
+ const notes=melodies[id];if(!notes)return;notes.forEach((n,i)=>setTimeout(()=>{if(soundOn&&activeSection===id)tone(n,.16,.07,'triangle')},i*135));
+}
+function setActiveSection(id){if(id===activeSection)return;stopSceneAudio();activeSection=id;sectionCue(id)}
+sound?.addEventListener('click',()=>{soundOn=!soundOn;sound.setAttribute('aria-pressed',String(soundOn));sound.textContent=soundOn?'♫ SOUND ON':'♫ SOUND OFF';if(soundOn){getAudio();tone(560,.18,.07,'triangle');setTimeout(()=>tone(780,.2,.07,'sine'),160)}else stopSceneAudio()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)stopSceneAudio()});
+document.querySelectorAll('.btn,.contact-card,.resume-nav,nav a').forEach(el=>el.addEventListener('click',()=>tone(760,.085,.04,'triangle')));
+const phrases=['Computer Information Systems','Python • SQL • FastAPI','Data Analytics & Cybersecurity','Leadership • Operations • Technology'];let pi=0,ci=0,back=false,lastKey=0;
+function type(){const el=$('#typed');if(!el)return;const phrase=phrases[pi];el.textContent=phrase.slice(0,ci);if(!back&&ci<phrase.length){ci++;if(Date.now()-lastKey>55){if(activeSection==='home')tone(420+Math.random()*250,.045,.04,'triangle');lastKey=Date.now()}setTimeout(type,85)}else if(!back){back=true;setTimeout(type,1800)}else if(ci>0){ci--;setTimeout(type,32)}else{back=false;pi=(pi+1)%phrases.length;setTimeout(type,330)}}
 if(!reduce)type();
 const lines=['> initializing portfolio...','> loading skills: Python, SQL, FastAPI','> verifying projects: 3 found','> experience: leadership + operations','> systems ready.'];let li=0;
-function terminal(){const el=$('#terminal');if(!el)return;el.textContent=lines.slice(0,li+1).join('\n');if(soundOn)tone(390+li*60,.085,.028,'triangle');li=(li+1)%lines.length;if(li===0)el.textContent=lines.join('\n');if(!reduce)setTimeout(terminal,2400)}terminal();
-let busy=false;function updateScroll(){if(busy)return;busy=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#progress').style.width=(max>0?scrollY/max*100:0)+'%';const sections=$$('main section[id]');let current='home';sections.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)current=s.id});$$('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));busy=false})}addEventListener('scroll',updateScroll,{passive:true});updateScroll();
+function terminal(){const el=$('#terminal');if(!el)return;el.textContent=lines.slice(0,li+1).join('\n');if(activeSection==='home')tone(390+li*60,.085,.025,'triangle');li=(li+1)%lines.length;if(li===0)el.textContent=lines.join('\n');if(!reduce)setTimeout(terminal,2400)}terminal();
+let busy=false;function updateScroll(){if(busy)return;busy=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#progress').style.width=(max>0?scrollY/max*100:0)+'%';const sections=$$('main section[id]');let current='home';sections.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)current=s.id});$$('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));setActiveSection(current);busy=false})}addEventListener('scroll',updateScroll,{passive:true});updateScroll();
 // Tilt only small panels; never move section artwork or clickable links away from the pointer.
 if(!reduce&&matchMedia('(pointer:fine)').matches){$$('[data-tilt]').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`});el.addEventListener('pointerleave',()=>{el.style.transform=''})})}
 
-// Optional, restrained section-specific audio. All cues require SOUND ON first.
-let lastSceneSound = 0;
-function sceneCue(id){
-  if(!soundOn || reduce || document.hidden || Date.now()-lastSceneSound<6500)return;
-  lastSceneSound=Date.now();
-  const notes={about:[280,420],portfolio:[420,620],skills:[580,760],education:[350,520],experience:[240,360],development:[510,720],contact:[660,880]};
-  const pair=notes[id];if(!pair)return;
-  tone(pair[0],.14,.035,'triangle');
-  setTimeout(()=>{if(soundOn)tone(pair[1],.16,.03,'sine')},130);
-}
-if('IntersectionObserver' in window){
-  const sceneObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{
-    if(entry.isIntersecting)sceneCue(entry.target.id);
-  }),{threshold:.45});
-  document.querySelectorAll('main section[id]:not(#home)').forEach(s=>sceneObserver.observe(s));
-}
-let lastHoverTone=0;
-document.querySelectorAll('.project,.skill,.education-card,.career,.roadmap-card').forEach(card=>{
-  card.addEventListener('pointerenter',()=>{
-    if(!soundOn || Date.now()-lastHoverTone<1800)return;
-    lastHoverTone=Date.now();tone(590,.065,.017,'sine');
-  });
-});
-
-// Clear, opt-in audio feedback for visible interactive elements. No autoplay.
-let lastMotionAudio=0;
-function interactiveCue(kind){
- if(!soundOn || document.hidden || Date.now()-lastMotionAudio<400)return;
- lastMotionAudio=Date.now();
- if(kind==='project'){tone(340,.14,.085,'triangle');setTimeout(()=>tone(570,.15,.07,'sine'),110)}
- else if(kind==='skill'){tone(650,.09,.065,'square');setTimeout(()=>tone(840,.1,.045,'sine'),90)}
- else if(kind==='contact'){tone(550,.16,.075,'sine');setTimeout(()=>tone(880,.22,.06,'sine'),140)}
- else tone(460,.11,.07,'triangle');
-}
-document.querySelectorAll('.project').forEach(el=>el.addEventListener('click',()=>interactiveCue('project')));
-document.querySelectorAll('.skill').forEach(el=>el.addEventListener('click',()=>interactiveCue('skill')));
-document.querySelectorAll('.education-card,.career,.roadmap-card').forEach(el=>el.addEventListener('click',()=>interactiveCue('other')));
-document.querySelectorAll('.contact-card').forEach(el=>el.addEventListener('pointerenter',()=>interactiveCue('contact')));
-// An explicit sound test, activated by clicking the SOUND ON control a second time would mute,
-// so instead allow Shift+click while sound is on to play an audible demo.
-sound?.addEventListener('pointerdown',e=>{if(e.shiftKey&&soundOn){tone(450,.22,.1,'triangle');setTimeout(()=>tone(670,.22,.09,'triangle'),240)}});
+// Brief tactile cues on interaction, never continuous sounds on other sections.
+let lastInteraction=0;
+function interactiveCue(kind){if(!soundOn||document.hidden||Date.now()-lastInteraction<550)return;lastInteraction=Date.now();const map={project:[400,590],skill:[640,840],contact:[560,850],other:[430,630]};(map[kind]||map.other).forEach((n,i)=>setTimeout(()=>tone(n,.12,.055,'triangle'),i*115))}
+document.querySelectorAll('.project').forEach(el=>el.addEventListener('pointerenter',()=>interactiveCue('project')));
+document.querySelectorAll('.skill').forEach(el=>el.addEventListener('pointerenter',()=>interactiveCue('skill')));
+document.querySelectorAll('.education-card,.career,.roadmap-card,.contact-card').forEach(el=>el.addEventListener('pointerenter',()=>interactiveCue('other')));
