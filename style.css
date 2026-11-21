@@ -87,3 +87,39 @@
 @media(max-width:900px){.section .motion-scene{opacity:.65!important}}
 @media(max-width:600px){.section .motion-scene{opacity:.45!important}}
 @media(prefers-reduced-motion:reduce){.section .motion-scene *{animation:none!important}}
+
+
+/* V4: visual movement inside the content itself, not behind the artwork */
+.skill,.project,.education-card,.career,.roadmap-card,.contact-card{overflow:hidden;position:relative}
+.skill{min-height:270px;padding-top:110px!important;border:1px solid #3adffb77;box-shadow:inset 0 0 20px #17e2f015,0 12px 30px #0006;transition:transform .35s,box-shadow .35s,border-color .35s}
+.skill:hover{transform:translateY(-9px) scale(1.025);box-shadow:0 0 34px #33e9f05c,0 0 60px #9eff3429;border-color:#a5ff38}
+.skill-visual{position:absolute;top:15px;left:20px;right:20px;height:82px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #40f8f66b;pointer-events:none}
+.skill-glyph{font:900 55px/1 Consolas,monospace;color:#8bff4c;text-shadow:0 0 12px #9bff52,0 0 35px #37eaff;animation:skillPulse 3.5s ease-in-out infinite}
+.skill:nth-child(2n) .skill-glyph{color:#4deaff;animation-delay:-1.7s}
+.skill-signal{display:flex;gap:5px;align-items:end;height:55px}.skill-signal i{width:7px;height:15px;border-radius:3px;background:linear-gradient(#baff51,#29c9ff);box-shadow:0 0 9px #3defff;animation:equalizer 1.4s ease-in-out infinite alternate}
+.skill-signal i:nth-child(2){animation-delay:-.4s}.skill-signal i:nth-child(3){animation-delay:-.8s}.skill-signal i:nth-child(4){animation-delay:-1.2s}.skill-signal i:nth-child(5){animation-delay:-.2s}
+.project-image{isolation:isolate}.project-live{position:absolute;right:12px;top:12px;width:105px;height:62px;z-index:2;background:#021b2bd9;border:1px solid #70f9f4;border-radius:8px;box-shadow:0 0 22px #27efff8a;pointer-events:none;display:flex;align-items:center;justify-content:center;gap:5px;overflow:hidden}
+.live-ball{font-size:27px;animation:ballBounce 2.1s ease-in-out infinite}.live-score{font:700 9px Consolas,monospace;color:#78ecfa}.live-score b{display:block;color:#adff5b;font-size:18px}
+.live-db{font-size:39px;color:#aaff5a;text-shadow:0 0 18px #aeff4d;animation:dbPulse 2s infinite}.live-query{font:700 10px Consolas,monospace;color:#55e9f9;animation:blinkQuery 1s steps(2) infinite}
+.live-truck{font-size:30px;animation:truckAcross 5s ease-in-out infinite}.live-track{position:absolute;bottom:9px;left:8px;right:8px;border-bottom:2px dashed #b5ff53}
+.card-motion{float:right;position:relative;width:64px;height:56px;display:grid;place-items:center;margin:-7px 0 4px 10px;pointer-events:none}
+.card-motion span{color:#9bff55;font-size:34px;line-height:1;text-shadow:0 0 17px #9bff55;animation:skillPulse 3s ease-in-out infinite}
+.card-motion i{position:absolute;inset:4px;border:1px solid #43e7f7;border-radius:50%;box-shadow:0 0 13px #44e9fa5b;animation:spinRing 7s linear infinite}
+.card-motion i:nth-of-type(2){inset:13px;border-style:dashed;animation-direction:reverse}
+.career-motion i,.roadmap-motion i{border-radius:8px;transform:rotate(45deg)}
+.contact-motion{width:50px;height:50px}.contact-motion span{font-size:28px}
+.contact-card{border-color:#41dff799!important;background-image:linear-gradient(115deg,#031c2bdd,#082c35cc 55%,#0a291fbb);box-shadow:inset 0 0 24px #24e5e814,0 0 18px #28e8ef17}
+.contact-card:hover{transform:translateY(-8px) scale(1.015);box-shadow:0 0 28px #3beaf66c,0 0 48px #9aff4b40}
+.contact-card strong{color:#e9ffff}.contact-card small{color:#a7ff5d}
+.btn,.sound,.resume-nav{background:linear-gradient(115deg,#063c4a,#0b5952 55%,#357a32)!important;border:1px solid #60eff3!important;box-shadow:0 0 15px #35eaff5e,inset 0 0 10px #d6fffd12!important;color:#e7fffc!important;text-shadow:0 0 8px #71ffcf;transition:transform .25s,filter .25s,box-shadow .25s!important}
+.btn:hover,.sound:hover,.resume-nav:hover{filter:brightness(1.35);box-shadow:0 0 22px #4deaffb0,0 0 44px #adff5380!important;transform:translateY(-5px) scale(1.025)}
+.ambient-orbit i{box-shadow:0 0 20px #aaff55,0 0 36px #26e5ff!important;filter:brightness(1.8)}
+@keyframes skillPulse{50%{transform:translateY(-5px) scale(1.1);filter:brightness(1.5)}}
+@keyframes equalizer{to{height:52px;filter:brightness(1.5)}}
+@keyframes ballBounce{50%{transform:translateY(-13px) rotate(35deg)}}
+@keyframes dbPulse{50%{transform:scale(1.18);filter:brightness(1.7)}}
+@keyframes blinkQuery{50%{opacity:.3}}
+@keyframes truckAcross{0%,100%{transform:translateX(-18px)}50%{transform:translateX(18px)}}
+@keyframes spinRing{to{transform:rotate(360deg)}}
+@media(max-width:800px){.skill{min-height:240px}.skill-visual{height:70px}.skill-glyph{font-size:44px}}
+@media(prefers-reduced-motion:reduce){.skill-visual *, .project-live *, .card-motion *{animation:none!important}}
