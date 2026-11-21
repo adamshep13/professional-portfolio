@@ -185,3 +185,32 @@
 @keyframes aboutTrace{to{width:35%;filter:brightness(1.8)}}
 @media(max-width:800px){.dispatch-truck{width:27%}}
 @media(prefers-reduced-motion:reduce){.dispatch-truck,#about .about-enhanced,.about-visual *{animation:none!important}}
+
+/* V7: visible cinematic project interactions and richer About surfaces */
+#portfolio .project{position:relative;will-change:transform;transform-origin:center center;transition:transform .34s cubic-bezier(.2,.8,.2,1),box-shadow .34s,border-color .34s,filter .34s!important;isolation:isolate}
+#portfolio .project:hover{z-index:10;transform:perspective(950px) translateY(-16px) scale(1.055) rotate(-.6deg);border-color:#a5ff38!important;box-shadow:0 35px 80px #000d,0 0 0 2px #a5ff38b0,0 0 38px #31dfff85!important}
+#portfolio .project:focus-within{z-index:10;outline:2px solid #a5ff38;outline-offset:4px}
+#portfolio .project::after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:14px;background:linear-gradient(120deg,transparent 27%,#6bf6ff12 47%,#a5ff3820 51%,transparent 68%);background-size:250% 100%;animation:projectShimmer 8s linear infinite}
+#portfolio .project-image{isolation:isolate;overflow:hidden!important}
+#portfolio .project-image img{object-fit:contain!important;transform-origin:center;animation:projectImageFloat 12s ease-in-out infinite alternate}
+#portfolio .project:hover .project-image img{animation-play-state:paused;transform:scale(1.045) rotate(-1deg)!important}
+#portfolio .motion-projects .motion-route{display:none!important} /* Remove the abstract blue rectangle/green circles. */
+#portfolio .dispatch-truck{bottom:5px;left:3%;width:29%;max-width:140px;animation:dispatchDriveV7 9s ease-in-out infinite alternate}
+@keyframes dispatchDriveV7{from{transform:translateX(0) translateY(0)}to{transform:translateX(205%) translateY(-3px)}}
+@keyframes projectShimmer{from{background-position:180% 0}to{background-position:-80% 0}}
+#about .about-grid{gap:26px}
+#about .about-enhanced{isolation:isolate;border-width:2px!important;border-radius:18px!important;animation:aboutLiftV7 8s ease-in-out infinite!important;transition:transform .35s,box-shadow .35s,filter .35s!important}
+#about .copy-panel.about-enhanced{background:radial-gradient(circle at 7% 8%,#0d758260,transparent 42%),radial-gradient(circle at 93% 91%,#3a892b46,transparent 40%),linear-gradient(135deg,#062739f0,#06141feb 68%,#12331af0)!important;border-color:#48f3ff!important;box-shadow:inset 5px 0 #31dfff8a,0 0 26px #31dfff3b!important}
+#about .about-side .feature:first-child{background:radial-gradient(circle at 88% 12%,#a5ff3860,transparent 48%),linear-gradient(140deg,#12371bf2,#041a28ed)!important;border-color:#a5ff38!important;box-shadow:inset 5px 0 #a5ff38a6,0 0 26px #a5ff3840!important}
+#about .about-side .feature:last-child{background:radial-gradient(circle at 86% 12%,#31dfff75,transparent 50%),linear-gradient(145deg,#062f43ed,#071d26ed)!important;border-color:#38dfff!important;box-shadow:inset 5px 0 #31dfffaa,0 0 26px #31dfff3c!important}
+#about .about-enhanced::after{content:'';position:absolute;pointer-events:none;inset:0;border-radius:inherit;background:linear-gradient(110deg,transparent 35%,#ffffff0c 49%,#a5ff380c 51%,transparent 65%);background-size:240% 100%;animation:projectShimmer 10s linear infinite;z-index:-1}
+#about .about-enhanced:hover{animation-play-state:paused!important;transform:translateY(-12px) scale(1.02)!important;filter:brightness(1.17)!important;box-shadow:0 22px 58px #000a,0 0 40px #42eeff85!important}
+#about .about-side .feature:first-child h3{color:#b6ff6b;text-shadow:0 0 15px #a5ff3855}
+#about .about-side .feature:last-child h3{color:#69eaff;text-shadow:0 0 15px #31dfff55}
+#about .about-visual{height:59px;border-width:2px;background:linear-gradient(95deg,#0b4351c9,#183c2c9e);box-shadow:inset 0 0 16px #2ceaff22,0 0 13px #31dfff32}
+#about .about-visual-2{background:linear-gradient(95deg,#21481a,#082c3a);border-color:#b5ff6b;box-shadow:0 0 14px #a5ff384a}
+#about .about-visual-3{background:linear-gradient(95deg,#083c57,#0b3530);border-color:#31dfff;box-shadow:0 0 14px #31dfff55}
+@keyframes aboutLiftV7{0%,100%{translate:0 0}50%{translate:0 -9px}}
+#about .about-side .feature:last-child{animation-delay:-4s!important}
+@media(hover:none){#portfolio .project:hover{transform:none!important}#about .about-enhanced:hover{transform:none!important}}
+@media(prefers-reduced-motion:reduce){#portfolio .project::after,#about .about-enhanced::after,#about .about-enhanced{animation:none!important}}
