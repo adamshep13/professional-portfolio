@@ -191,3 +191,37 @@ body{background:#020914}
 @media(max-width:800px){.top-resume{margin-left:8px}.cinematic-showcase{height:260px;transform:none}.hero-art{transform:none!important}#home .hero-copy{background:linear-gradient(90deg,#020b14bb,transparent)}}
 @media(max-width:550px){.cinematic-showcase{height:210px;margin-bottom:28px}#home .identity-heading{font-size:clamp(47px,11vw,75px)}.top-resume{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.cinematic-showcase img,.showcase-shine,#home .hero-art .photoreal-chip,#home .hero-art .floating-code{animation:none!important}}
+
+
+/* V7: each section has its OWN cinematic artwork; never reuse the home chip */
+.section:not(.hero)>.cinematic-scene{opacity:.28!important;background-size:cover!important;background-position:center!important;filter:saturate(1.05)!important}
+#home>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-home.webp")!important;}
+#about>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-about.webp")!important;}
+#portfolio>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-portfolio.webp")!important;}
+#skills>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-skills.webp")!important;}
+#education>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-education.webp")!important;}
+#experience>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-experience.webp")!important;}
+#development>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-development.webp")!important;}
+#contact>.cinematic-scene{background-image:linear-gradient(90deg,rgba(1,8,18,.93),rgba(1,8,18,.58)),url("cinematic-contact.webp")!important;}
+
+#home>.cinematic-scene{opacity:.82!important;background-image:linear-gradient(90deg,rgba(1,8,18,.93) 0%,rgba(1,8,18,.79) 36%,rgba(1,8,18,.12) 100%),url("cinematic-home.webp")!important;background-size:cover!important;background-position:center!important}
+#home .hero-art .photoreal-chip{background-image:url('cinematic-home.webp')!important;background-position:68% 62%!important;animation:none!important}
+#home .hero-art{background:rgba(1,9,18,.36)!important;backdrop-filter:blur(2px);overflow:visible}
+#home .hero-art .chip-scene{overflow:hidden;border-radius:15px}
+#home .hero-copy{background:linear-gradient(90deg,rgba(1,8,17,.78),rgba(1,8,17,.22));border-radius:18px;padding:20px}
+.cinematic-showcase{height:auto!important;min-height:0!important;aspect-ratio:16/8.5;overflow:hidden!important;background:#020d18!important;transform:none!important}
+.cinematic-showcase img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center!important;animation:none!important;filter:none!important}
+.cinematic-showcase:before{background:linear-gradient(0deg,#020b14a8,transparent 23%)!important}
+#portfolio .projects-grid{position:relative;z-index:2}
+#portfolio .project-screen{background-image:none!important}
+#portfolio .project{transition:transform .3s,box-shadow .3s;transform-style:preserve-3d}
+#portfolio .project:hover{transform:perspective(900px) rotateY(-3deg) translateY(-8px)!important;box-shadow:0 22px 70px #00ddff33}
+.sound-toggle{cursor:pointer;background:#061b2a;color:#6dff7c;border:1px solid #29c9e899;border-radius:8px;padding:9px 12px;font:700 11px monospace;white-space:nowrap}
+.sound-toggle:hover,.sound-toggle:focus-visible{box-shadow:0 0 20px #24e7ff88}
+.flyover{position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none}
+.aircraft{position:absolute;top:11%;left:-15%;font-size:45px;color:#d4f8ff;filter:drop-shadow(0 0 10px #25e9ff);transform:rotate(4deg);animation:aircraftFly 24s linear infinite}
+.parachute{position:absolute;top:16%;left:52%;font-size:38px;opacity:0;animation:chuteDrop 24s linear infinite}
+@keyframes aircraftFly{0%{left:-15%;opacity:0}8%{opacity:.85}64%{left:105%;opacity:.85}68%,100%{left:105%;opacity:0}}
+@keyframes chuteDrop{0%,31%{opacity:0;transform:translate(0,-20px)}36%{opacity:1}62%{opacity:.75;transform:translate(-110px,160px)}70%,100%{opacity:0;transform:translate(-140px,220px)}}
+@media(max-width:900px){.sound-toggle{padding:6px;font-size:9px}.cinematic-showcase{aspect-ratio:16/10}}
+@media(prefers-reduced-motion:reduce){.aircraft,.parachute{animation:none;display:none}}

@@ -36,3 +36,26 @@ const sectionObserver = new IntersectionObserver(entries => {
   }
 }, {rootMargin:'-22% 0px -55% 0px'});
 document.querySelectorAll('main section[id]').forEach(s => sectionObserver.observe(s));
+
+
+// Optional sound effects. Never autoplay audio before a visitor opts in.
+(() => {
+ const button=document.querySelector('.sound-toggle'); if(!button)return;
+ let enabled=false,context=null,lastKey=0;
+ const tone=(frequency=520,duration=.055,volume=.015,type='sine')=>{
+  if(!enabled)return;
+  try{context ||= new (window.AudioContext||window.webkitAudioContext)();
+   if(context.state==='suspended')context.resume();
+   const oscillator=context.createOscillator(),gain=context.createGain();
+   oscillator.type=type;oscillator.frequency.setValueAtTime(frequency,context.currentTime);
+   gain.gain.setValueAtTime(volume,context.currentTime);
+   gain.gain.exponentialRampToValueAtTime(.0001,context.currentTime+duration);
+   oscillator.connect(gain);gain.connect(context.destination);oscillator.start();oscillator.stop(context.currentTime+duration);
+  }catch(e){} };
+ button.addEventListener('click',()=>{enabled=!enabled;button.textContent=enabled?'♫ SOUND ON':'♫ SOUND OFF';button.setAttribute('aria-pressed',String(enabled));if(enabled)tone(760,.16,.025)});
+ const target=document.querySelector('#typed');
+ if(target){new MutationObserver(()=>{if(!enabled||document.hidden)return;const now=performance.now();if(now-lastKey>95){lastKey=now;tone(420+Math.random()*170,.028,.007,'triangle')}}).observe(target,{childList:true,characterData:true,subtree:true})}
+ document.querySelectorAll('.project,.contact-link,.button').forEach(el=>el.addEventListener('click',()=>tone(840,.065,.012)));
+ // A quiet electronic flyover cue when the plane crosses the home scene, only with sound enabled.
+ const plane=document.querySelector('.aircraft');plane?.addEventListener('animationiteration',()=>{if(enabled&&location.hash!=='#contact') {tone(110,.6,.012,'sawtooth');setTimeout(()=>tone(90,.5,.009,'sawtooth'),260)}});
+})();
