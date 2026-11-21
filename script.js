@@ -21,14 +21,29 @@ function flyoverCue(){
  if(!soundOn||reduce||document.hidden||activeSection!=='home')return;
  try{const ctx=getAudio(),duration=2.1,buffer=ctx.createBuffer(1,Math.floor(ctx.sampleRate*duration),ctx.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.28;const src=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();src.buffer=buffer;filter.type='lowpass';filter.frequency.setValueAtTime(210,ctx.currentTime);filter.frequency.linearRampToValueAtTime(650,ctx.currentTime+.8);filter.frequency.linearRampToValueAtTime(180,ctx.currentTime+duration);gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.linearRampToValueAtTime(.16,ctx.currentTime+.5);gain.gain.linearRampToValueAtTime(.0001,ctx.currentTime+duration);src.connect(filter);filter.connect(gain);gain.connect(ctx.destination);activeVoices.add(src);src.onended=()=>activeVoices.delete(src);src.start();src.stop(ctx.currentTime+duration)}catch(e){}
 }
-const plane=$('.plane');plane?.addEventListener('animationiteration',flyoverCue);
-function sectionCue(id){if(!soundOn||document.hidden)return;
- const melodies={about:[280,410],portfolio:[360,570,730],skills:[600,810],education:[420,560],experience:[210,320],development:[460,660,780],contact:[680,920]};
- const notes=melodies[id];if(!notes)return;notes.forEach((n,i)=>setTimeout(()=>{if(soundOn&&activeSection===id)tone(n,.16,.07,'triangle')},i*135));
+const plane=$('.plane');
+// The CSS flight lasts 27 seconds. Trigger the sound as the aircraft enters the screen,
+// not at the end of its flight. The timer is cancelled when sound is disabled or Home is left.
+let flightTimer=null, ambienceTimer=null;
+function cancelFlight(){if(flightTimer!==null){clearTimeout(flightTimer);flightTimer=null}}
+function scheduleFlight(delay=2700){cancelFlight();flightTimer=setTimeout(()=>{flightTimer=null;if(soundOn&&activeSection==='home')flyoverCue()},delay)}
+plane?.addEventListener('animationiteration',()=>scheduleFlight(2700));
+function sceneTexture(id){
+ if(!soundOn||document.hidden||reduce||activeSection!==id)return;
+ // Brief section-specific sounds, not a continuous track and not a navigation chime.
+ if(id==='portfolio') {tone(270,.13,.08,'sawtooth');setTimeout(()=>{if(activeSection===id)tone(350,.1,.07,'triangle')},145)}
+ else if(id==='skills'){tone(760,.09,.075,'sine');setTimeout(()=>{if(activeSection===id)tone(960,.09,.05,'sine')},130)}
+ else if(id==='education'){tone(520,.2,.065,'sine');setTimeout(()=>{if(activeSection===id)tone(680,.22,.06,'sine')},180)}
+ else if(id==='experience'){tone(180,.23,.09,'sawtooth');setTimeout(()=>{if(activeSection===id)tone(220,.15,.06,'triangle')},190)}
+ else if(id==='development'){tone(460,.1,.07,'triangle');setTimeout(()=>{if(activeSection===id)tone(610,.14,.065,'sine')},130)}
+ else if(id==='contact'){tone(660,.16,.065,'sine');setTimeout(()=>{if(activeSection===id)tone(900,.18,.055,'sine')},190)}
+ else if(id==='about'){tone(360,.16,.065,'triangle');setTimeout(()=>{if(activeSection===id)tone(490,.2,.06,'sine')},170)}
 }
-function setActiveSection(id){if(id===activeSection)return;stopSceneAudio();activeSection=id;sectionCue(id)}
-sound?.addEventListener('click',()=>{soundOn=!soundOn;sound.setAttribute('aria-pressed',String(soundOn));sound.textContent=soundOn?'♫ SOUND ON':'♫ SOUND OFF';if(soundOn){getAudio();tone(560,.18,.07,'triangle');setTimeout(()=>tone(780,.2,.07,'sine'),160)}else stopSceneAudio()});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)stopSceneAudio()});
+function startAmbience(){if(ambienceTimer!==null)clearInterval(ambienceTimer);ambienceTimer=setInterval(()=>{if(soundOn&&activeSection!=='home')sceneTexture(activeSection)},12500)}
+startAmbience();
+function setActiveSection(id){if(id===activeSection)return;stopSceneAudio();cancelFlight();activeSection=id;if(id==='home'&&soundOn)scheduleFlight(2700)}
+sound?.addEventListener('click',()=>{soundOn=!soundOn;sound.setAttribute('aria-pressed',String(soundOn));sound.textContent=soundOn?'♫ SOUND ON':'♫ SOUND OFF';if(soundOn){getAudio();tone(560,.18,.07,'triangle');if(activeSection==='home')scheduleFlight(2700);else sceneTexture(activeSection)}else{cancelFlight();stopSceneAudio()}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden){cancelFlight();stopSceneAudio()}});
 document.querySelectorAll('.btn,.contact-card,.resume-nav,nav a').forEach(el=>el.addEventListener('click',()=>tone(760,.085,.04,'triangle')));
 const phrases=['Computer Information Systems','Python • SQL • FastAPI','Data Analytics & Cybersecurity','Leadership • Operations • Technology'];let pi=0,ci=0,back=false,lastKey=0;
 function type(){const el=$('#typed');if(!el)return;const phrase=phrases[pi];el.textContent=phrase.slice(0,ci);if(!back&&ci<phrase.length){ci++;if(Date.now()-lastKey>55){if(activeSection==='home')tone(420+Math.random()*250,.045,.04,'triangle');lastKey=Date.now()}setTimeout(type,85)}else if(!back){back=true;setTimeout(type,1800)}else if(ci>0){ci--;setTimeout(type,32)}else{back=false;pi=(pi+1)%phrases.length;setTimeout(type,330)}}
@@ -37,7 +52,7 @@ const lines=['> initializing portfolio...','> loading skills: Python, SQL, FastA
 function terminal(){const el=$('#terminal');if(!el)return;el.textContent=lines.slice(0,li+1).join('\n');if(activeSection==='home')tone(390+li*60,.085,.025,'triangle');li=(li+1)%lines.length;if(li===0)el.textContent=lines.join('\n');if(!reduce)setTimeout(terminal,2400)}terminal();
 let busy=false;function updateScroll(){if(busy)return;busy=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#progress').style.width=(max>0?scrollY/max*100:0)+'%';const sections=$$('main section[id]');let current='home';sections.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)current=s.id});$$('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));setActiveSection(current);busy=false})}addEventListener('scroll',updateScroll,{passive:true});updateScroll();
 // Tilt only small panels; never move section artwork or clickable links away from the pointer.
-if(!reduce&&matchMedia('(pointer:fine)').matches){$$('[data-tilt]').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`});el.addEventListener('pointerleave',()=>{el.style.transform=''})})}
+if(!reduce&&matchMedia('(pointer:fine)').matches){$$('[data-tilt],.project').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`});el.addEventListener('pointerleave',()=>{el.style.transform=''})})}
 
 // Brief tactile cues on interaction, never continuous sounds on other sections.
 let lastInteraction=0;
