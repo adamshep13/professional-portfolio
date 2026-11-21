@@ -1,61 +1,23 @@
 'use strict';
-const nav=document.querySelector('#nav');const toggle=document.querySelector('.nav-toggle');toggle?.addEventListener('click',()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'✕':'☰'});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');toggle?.setAttribute('aria-expanded','false');if(toggle)toggle.textContent='☰'}));
-document.querySelector('#year').textContent=new Date().getFullYear();
-const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-const phrases=['Computer Information Systems','Python • SQL • FastAPI','Data Analytics & Cybersecurity','Leadership • Operations • Technology'];const typed=document.querySelector('#typed');if(typed&&!reduced){let pi=0,ci=0,back=false;function type(){const p=phrases[pi];typed.textContent=p.slice(0,ci);if(!back&&ci<p.length){ci++;setTimeout(type,75)}else if(!back){back=true;setTimeout(type,1800)}else if(ci>0){ci--;setTimeout(type,35)}else{back=false;pi=(pi+1)%phrases.length;setTimeout(type,350)}}type()}
-const progress=document.querySelector('#progress');let ticking=false;window.addEventListener('scroll',()=>{if(ticking)return;ticking=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%';ticking=false})},{passive:true});
-const canvas=document.querySelector('#network');if(canvas&&!reduced){const ctx=canvas.getContext('2d');let width=0,height=0,points=[];function resize(){width=canvas.width=innerWidth; height=canvas.height=innerHeight;const count=Math.min(55,Math.floor(width*height/23000));points=Array.from({length:count},()=>({x:Math.random()*width,y:Math.random()*height,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28}))}resize();window.addEventListener('resize',resize,{passive:true});let frame=0;function draw(){frame++;ctx.clearRect(0,0,width,height);for(let i=0;i<points.length;i++){const p=points[i];p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>width)p.vx*=-1;if(p.y<0||p.y>height)p.vy*=-1;ctx.fillStyle='rgba(57,255,158,.34)';ctx.fillRect(p.x,p.y,2,2);for(let j=i+1;j<points.length;j++){const q=points[j];const d=Math.hypot(p.x-q.x,p.y-q.y);if(d<135){ctx.strokeStyle=`rgba(39,169,255,${(1-d/135)*.13})`;ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke()}}}requestAnimationFrame(draw)}draw();document.addEventListener('visibilitychange',()=>{if(document.hidden)ctx.clearRect(0,0,width,height)})}
-
-// Gentle depth effect on section art; disabled for reduced-motion preferences.
-if (!reduced) {
-  const artPanels = [...document.querySelectorAll('.section-art')];
-  let artScheduled = false;
-  const updateArt = () => {
-    for (const art of artPanels) {
-      const rect = art.parentElement.getBoundingClientRect();
-      if (rect.bottom < 0 || rect.top > innerHeight) continue;
-      const offset = Math.max(-38, Math.min(38, (innerHeight / 2 - rect.top - rect.height / 2) * .055));
-      art.style.backgroundPositionY = `calc(35% + ${offset}px)`;
-    }
-    artScheduled = false;
-  };
-  addEventListener('scroll', () => {
-    if (!artScheduled) { artScheduled = true; requestAnimationFrame(updateArt); }
-  }, { passive: true });
-  updateArt();
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const nav=$('#nav'),menu=$('#menu');
+menu?.addEventListener('click',()=>{let opened=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(opened));menu.textContent=opened?'✕':'☰'});
+$$('nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false');menu.textContent='☰'}));
+$('#year').textContent=new Date().getFullYear();
+const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if('IntersectionObserver' in window){const obs=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}}),{threshold:.07});$$('.reveal').forEach(el=>obs.observe(el))}else $$('.reveal').forEach(el=>el.classList.add('visible'));
+const sound=$('#sound');let audioCtx=null,soundOn=false,lastKey=0;
+function tone(freq=500,duration=.06,vol=.015,type='sine'){
+ if(!soundOn)return;
+ try{audioCtx??=new (window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(vol,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+duration);osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+duration)}catch(e){}
 }
-
-
-// Highlight the section currently in view without changing navigation destinations.
-const sectionLinks = [...document.querySelectorAll('#nav a[href^="#"]')];
-const sectionObserver = new IntersectionObserver(entries => {
-  for (const entry of entries) {
-    if (!entry.isIntersecting) continue;
-    sectionLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + entry.target.id));
-  }
-}, {rootMargin:'-22% 0px -55% 0px'});
-document.querySelectorAll('main section[id]').forEach(s => sectionObserver.observe(s));
-
-
-// Optional sound effects. Never autoplay audio before a visitor opts in.
-(() => {
- const button=document.querySelector('.sound-toggle'); if(!button)return;
- let enabled=false,context=null,lastKey=0;
- const tone=(frequency=520,duration=.055,volume=.015,type='sine')=>{
-  if(!enabled)return;
-  try{context ||= new (window.AudioContext||window.webkitAudioContext)();
-   if(context.state==='suspended')context.resume();
-   const oscillator=context.createOscillator(),gain=context.createGain();
-   oscillator.type=type;oscillator.frequency.setValueAtTime(frequency,context.currentTime);
-   gain.gain.setValueAtTime(volume,context.currentTime);
-   gain.gain.exponentialRampToValueAtTime(.0001,context.currentTime+duration);
-   oscillator.connect(gain);gain.connect(context.destination);oscillator.start();oscillator.stop(context.currentTime+duration);
-  }catch(e){} };
- button.addEventListener('click',()=>{enabled=!enabled;button.textContent=enabled?'♫ SOUND ON':'♫ SOUND OFF';button.setAttribute('aria-pressed',String(enabled));if(enabled)tone(760,.16,.025)});
- const target=document.querySelector('#typed');
- if(target){new MutationObserver(()=>{if(!enabled||document.hidden)return;const now=performance.now();if(now-lastKey>95){lastKey=now;tone(420+Math.random()*170,.028,.007,'triangle')}}).observe(target,{childList:true,characterData:true,subtree:true})}
- document.querySelectorAll('.project,.contact-link,.button').forEach(el=>el.addEventListener('click',()=>tone(840,.065,.012)));
- // A quiet electronic flyover cue when the plane crosses the home scene, only with sound enabled.
- const plane=document.querySelector('.aircraft');plane?.addEventListener('animationiteration',()=>{if(enabled&&location.hash!=='#contact') {tone(110,.6,.012,'sawtooth');setTimeout(()=>tone(90,.5,.009,'sawtooth'),260)}});
-})();
+sound?.addEventListener('click',()=>{soundOn=!soundOn;sound.setAttribute('aria-pressed',String(soundOn));sound.textContent=soundOn?'♫ SOUND ON':'♫ SOUND OFF';if(soundOn)tone(680,.12,.025)});
+const phrases=['Computer Information Systems','Python • SQL • FastAPI','Data Analytics & Cybersecurity','Leadership • Operations • Technology'];let pi=0,ci=0,back=false;
+function type(){const el=$('#typed');if(!el)return;const phrase=phrases[pi];el.textContent=phrase.slice(0,ci);if(!back&&ci<phrase.length){ci++;if(Date.now()-lastKey>55){tone(420+Math.random()*250,.025,.007,'triangle');lastKey=Date.now()}setTimeout(type,85)}else if(!back){back=true;setTimeout(type,1800)}else if(ci>0){ci--;setTimeout(type,32)}else{back=false;pi=(pi+1)%phrases.length;setTimeout(type,330)}}
+if(!reduce)type();
+const lines=['> initializing portfolio...','> loading skills: Python, SQL, FastAPI','> verifying projects: 3 found','> experience: leadership + operations','> systems ready.'];let li=0;
+function terminal(){const el=$('#terminal');if(!el)return;el.textContent=lines.slice(0,li+1).join('\n');li=(li+1)%lines.length;if(li===0)el.textContent=lines.join('\n');if(!reduce)setTimeout(terminal,2400)}terminal();
+let busy=false;function updateScroll(){if(busy)return;busy=true;requestAnimationFrame(()=>{const max=document.documentElement.scrollHeight-innerHeight;$('#progress').style.width=(max>0?scrollY/max*100:0)+'%';const sections=$$('main section[id]');let current='home';sections.forEach(s=>{if(s.getBoundingClientRect().top<innerHeight*.45)current=s.id});$$('nav a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));busy=false})}addEventListener('scroll',updateScroll,{passive:true});updateScroll();
+// Tilt only small panels; never move section artwork or clickable links away from the pointer.
+if(!reduce&&matchMedia('(pointer:fine)').matches){$$('[data-tilt]').forEach(el=>{el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;el.style.transform=`perspective(900px) rotateY(${x*5}deg) rotateX(${-y*5}deg)`});el.addEventListener('pointerleave',()=>{el.style.transform=''})})}
